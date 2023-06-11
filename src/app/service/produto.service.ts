@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmnet } from 'src/environment/environment';
 import { Produto } from '../model/produto';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class ProdutoService {
   buscarTodos() {
     return this.http.get<Produto[]>(this.URL);
   }
+
+  findAllProdutos(): Observable<string[]> {
+    return this.http.get<string[]>(this.URL + "/nomes").pipe(
+      catchError(() => of([]))
+    );
+  }   
 
   salvar(produto: Produto): Observable<any> {
     return this.http.post(this.URL, produto);

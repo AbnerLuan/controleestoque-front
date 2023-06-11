@@ -1,7 +1,7 @@
 import { ItemPedido } from "./itempedido";
 
 export interface Venda {
-    vendaId: number;
+    vendaId: number;    
     nomeCliente: string;
     canalVenda: string;
     valorTotalVenda: number;

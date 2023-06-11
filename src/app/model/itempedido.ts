@@ -5,7 +5,7 @@ export interface ItemPedido {
   itemId?: number;
   produto?: Produto;
   nomeProduto?: string;
-  venda?: Venda;
+  venda?: Venda; 
   quantidade: number;
   valorUnit: number;
   valorTotalItem?: number;

@@ -4,6 +4,12 @@ import { Venda } from 'src/app/model/venda';
 import { VendaService } from 'src/app/service/venda.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Produto } from 'src/app/model/produto';
+import { ProdutoService } from 'src/app/service/produto.service';
+import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-venda',
@@ -35,7 +41,8 @@ export class VendaComponent implements OnInit {
 
   constructor(
     private vendaService: VendaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private produtoService: ProdutoService,
   ) { }
 
   ngOnInit(): void {
@@ -90,7 +97,7 @@ export class VendaComponent implements OnInit {
 
   removerVenda(venda: Venda): void {
     const vendaId = venda.vendaId;
-    this.vendaService.removerVenda(vendaId).subscribe(      
+    this.vendaService.removerVenda(vendaId).subscribe(
       () => {
         this.vendas = this.vendas.filter(v => v.vendaId !== vendaId);
         this.carregarVendas();
@@ -100,7 +107,7 @@ export class VendaComponent implements OnInit {
       }
     );
   }
-  
+
 
   limparFormulario(): void {
     this.venda = {
@@ -119,18 +126,14 @@ export class VendaComponent implements OnInit {
     this.venda = { ...venda };
   }
 
+
   adicionarItem(): void {
-    const novoItem: ItemPedido = {
-      nomeProduto: this.novoItem.nomeProduto,
-      quantidade: this.novoItem.quantidade,
-      valorUnit: this.novoItem.valorUnit
-    };
-    this.venda.itens.push(novoItem);
-    this.novoItem = {
-      nomeProduto: '',
-      quantidade: 0,
-      valorUnit: 0
-    };
+    if (this.novoItem.nomeProduto && this.novoItem.quantidade && this.novoItem.valorUnit) {
+      this.venda.itens.push({ ...this.novoItem });
+      this.novoItem = { nomeProduto: '', quantidade: 0, valorUnit: 0 };
+    } else {
+      this.showError('Preencha todos os campos do item corretamente.');
+    }
   }
 
   removerItem(index: number): void {
@@ -161,8 +164,7 @@ export class VendaComponent implements OnInit {
       this.removerVenda(venda);
     }
   }
-  
-  
+
 
   showSuccess(message: string): void {
     this.toastr.success(message);
@@ -171,4 +173,21 @@ export class VendaComponent implements OnInit {
   showError(message: string): void {
     this.toastr.error(message);
   }
+
+
+
+  buscarProdutos = (text$: Observable<string>): Observable<string[]> => {
+    return text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(term => this.produtoService.findAllProdutos().pipe(
+        map(produtos => produtos.filter(produto => produto.toLowerCase().includes(term.toLowerCase())))
+      ))
+    );
+  }
+
+  selecionarProduto(event: NgbTypeaheadSelectItemEvent): void {
+    this.novoItem.nomeProduto = event.item;
+  }
+
 }
