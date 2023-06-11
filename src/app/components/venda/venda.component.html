@@ -1,0 +1,120 @@
+<div class="container mt-4">
+  <h3>{{ isEdit ? 'Editar' : 'Nova' }} Venda</h3>
+
+  <form (ngSubmit)="salvarVenda()" class="form">
+    <!-- Campos de entrada para cadastrar uma nova venda -->
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>Nome do Cliente</label>
+          <input required type="text" class="form-control border" [(ngModel)]="venda.nomeCliente" name="nomeCliente" id="nomeCliente" [formControl]="nomeCliente">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>Canal de Venda</label>
+          <input required type="text" class="form-control border" [(ngModel)]="venda.canalVenda" name="canalVenda" [formControl]="canalVenda">
+        </div>
+      </div>
+    </div>
+  
+    <!-- Lista de Produtos -->
+    <div class="row">
+      <div class="col">
+        <h4>Lista de Produtos</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Valor Unitário</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of venda.itens; let i = index">
+              <td>{{ item.nomeProduto }}</td>
+              <td>{{ item.quantidade }}</td>
+              <td>{{ item.valorUnit }}</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmarExclusaoItem(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>            
+            <tr>
+              <td>
+                <input type="text" class="form-control border" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto">
+              </td>
+              <td>
+                <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade" name="quantidade">
+              </td>
+              <td>
+                <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario">
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Botões de ação -->
+    <div class="row">
+      <div class="col">
+        <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">
+          <i class="bi bi-save"></i> {{ isEdit ? 'Atualizar' : 'Salvar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="limparFormulario()">
+          <i class="bi bi-x"></i> Limpar
+        </button>
+      </div>
+    </div>
+  </form>
+  
+  <div class="mt-4">
+    <h4>Vendas Cadastradas</h4>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr class="table-primary">
+          <th>ID</th>
+          <th>Nome do Cliente</th>
+          <th>Canal de Venda</th>
+          <th>Valor Total da Venda</th>
+          <th>Data da Venda</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
+          <td>{{ vendaItem.vendaId }}</td>
+          <td>{{ vendaItem.nomeCliente }}</td>
+          <td>{{ vendaItem.canalVenda }}</td>
+          <td>{{ vendaItem.valorTotalVenda }}</td>
+          <td>{{ vendaItem.dataVenda }}</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-primary" (click)="editarVenda(vendaItem)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusaoVenda(vendaItem)">
+              <i class="bi bi-trash"></i>
+            </button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+
+
+
+</div>

@@ -1,0 +1,121 @@
+<div class="container mt-4">
+    <h3>{{ isEdit ? 'Editar' : 'Novo' }} Produto</h3>
+    <form (ngSubmit)="salvarProduto()" class="form">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="produto.nomeProduto" name="nomeProduto" [formControl]="nomeProduto">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="produto.tipoProduto" name="tipoProduto" [formControl]="tipoProduto">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Marca</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="produto.marcaProduto"
+                        name="marcaProduto" [formControl]="marcaProduto">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>EAN</label>
+                    <input type="text" class="form-control border" [(ngModel)]="produto.ean" name="ean">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group form-check form-switch">
+                    <input type="checkbox" class="form-check-input form-switch" [(ngModel)]="produto.cadastroSite"
+                        name="cadastroSite" id="cadastroSiteSwitch">
+                    <label class="form-check-label" for="cadastroSiteSwitch">Cadastro Site</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group form-check form-switch">
+                    <input type="checkbox" class="form-check-input form-switch" [(ngModel)]="produto.cadastroMl"
+                        name="cadastroMl" id="cadastroMlSwitch">
+                    <label class="form-check-label" for="cadastroMlSwitch">Cadastro ML</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group form-check form-switch">
+                    <input type="checkbox" class="form-check-input form-switch" [(ngModel)]="produto.cadastroShoppe"
+                        name="cadastroShoppe" id="cadastroShoppeSwitch">
+                    <label class="form-check-label" for="cadastroShoppeSwitch">Cadastro Shoppe</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group form-check form-switch">
+                    <input type="checkbox" class="form-check-input form-switch" [(ngModel)]="produto.blog" name="blog"
+                        id="blogSwitch">
+                    <label class="form-check-label" for="blogSwitch">Blog</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adicione os outros campos do formulário aqui -->
+
+        <div class="row">
+            <div class="col">
+                <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">{{ isEdit ? 'Atualizar' : 'Salvar' }}</button>
+                <button type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
+                <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar</button>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>EAN</th>
+            <th>Site</th>
+            <th>ML</th>
+            <th>Shop</th>
+            <th>OK</th>
+            <th>QTD</th>
+            <th>R$ Unit</th>
+            <th>Total</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let produto of produtos" [ngClass]="{'table-hoverable-row': true}">
+            <td>{{ produto.produtoId }}</td>
+            <td>{{ produto.nomeProduto }}</td>
+            <td>{{ produto.tipoProduto }}</td>
+            <td>{{ produto.marcaProduto }}</td>
+            <td>{{ produto.ean }}</td>
+            <td>{{ produto.cadastroSite ? 'OK' : 'NÃO' }}</td>
+            <td>{{ produto.cadastroMl ? 'OK' : 'NÃO' }}</td>
+            <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
+            <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
+            <td>{{ produto.quantidadeEstoque }}</td>
+            <td>{{ produto.valorUnitario }}</td>
+            <td>{{ produto.valorTotal }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="removerProduto(produto.produtoId)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+
+</div>
