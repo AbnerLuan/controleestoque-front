@@ -5,8 +5,7 @@ import { VendaService } from 'src/app/service/venda.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { Produto } from 'src/app/model/produto';
+import { Observable } from 'rxjs';
 import { ProdutoService } from 'src/app/service/produto.service';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +15,7 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.css']
 })
-export class VendaComponent implements OnInit {
+export class VendaComponent implements OnInit {  
 
   venda: Venda = {
     vendaId: 0,
@@ -32,8 +31,8 @@ export class VendaComponent implements OnInit {
 
   novoItem: ItemPedido = {
     nomeProduto: '',
-    quantidade: 0,
-    valorUnit: 0
+    quantidade: null,
+    valorUnit: null
   };
 
   vendas: Venda[] = [];
@@ -100,6 +99,7 @@ export class VendaComponent implements OnInit {
     this.vendaService.removerVenda(vendaId).subscribe(
       () => {
         this.vendas = this.vendas.filter(v => v.vendaId !== vendaId);
+        this.showSuccess('Venda Removida com Sucesso!');
         this.carregarVendas();
       },
       error => {

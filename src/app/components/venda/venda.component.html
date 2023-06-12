@@ -13,62 +13,70 @@
       </div>
       <div class="col">
         <div class="form-group">
-          <label>Canal de Venda</label>
-          <input required type="text" class="form-control border" [(ngModel)]="venda.canalVenda" name="canalVenda"
-            [formControl]="canalVenda">
+          <div class="form-group">
+            <label for="canalVendaSelect">Canal de Venda:</label>
+            <select id="canalVendaSelect" class="form-control" name="canalVenda" [(ngModel)]="venda.canalVenda">
+              <option value="LOJA">LOJA</option>
+              <option value="WHATSAPP">WHATSAPP</option>
+              <option value="ML">ML</option>
+              <option value="SHOPEE">SHOPEE</option>
+              <option value="AMAZON">AMAZON</option>
+              <option value="OUTROS">OUTROS</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
 
-<!-- Lista de Produtos -->
-<div class="row">
-  <div class="col">
-    <h4>Lista de Produtos</h4>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nome Produto</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of venda.itens; let i = index">
-          <td>{{ item.nomeProduto }}</td>
-          <td>{{ item.quantidade }}</td>
-          <td>{{ item.valorUnit }}</td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button type="button" class="btn btn-danger btn-sm" (click)="confirmarExclusaoItem(i)">
-              <i class="bi bi-trash"></i>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input required type="text" class="form-control" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto"
-              [ngbTypeahead]="buscarProdutos" (selectItem)="selecionarProduto($event)" />
-          </td>
-          <td>
-            <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade"
-              name="quantidade">
-          </td>
-          <td>
-            <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario">
-          </td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
-              <i class="bi bi-plus"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <!-- Lista de Produtos -->
+    <div class="row">
+      <div class="col">
+        <h4>Lista de Produtos</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome Produto</th>
+              <th>Quantidade</th>
+              <th>Valor Unitário</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of venda.itens; let i = index">
+              <td>{{ item.nomeProduto }}</td>
+              <td>{{ item.quantidade }}</td>
+              <td>{{ item.valorUnit }}</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmarExclusaoItem(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input required type="text" class="form-control" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto"
+                  [ngbTypeahead]="buscarProdutos" (selectItem)="selecionarProduto($event)" />
+              </td>
+              <td>
+                <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade"
+                  name="quantidade">
+              </td>
+              <td>
+                <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario">
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
 
 

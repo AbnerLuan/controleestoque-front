@@ -5,13 +5,15 @@
             <div class="col">
                 <div class="form-group">
                     <label>Nome</label>
-                    <input required type="text" class="form-control border" [(ngModel)]="produto.nomeProduto" name="nomeProduto" [formControl]="nomeProduto">
+                    <input required type="text" class="form-control border" [(ngModel)]="produto.nomeProduto"
+                        name="nomeProduto" [formControl]="nomeProduto">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
                     <label>Tipo</label>
-                    <input required type="text" class="form-control border" [(ngModel)]="produto.tipoProduto" name="tipoProduto" [formControl]="tipoProduto">
+                    <input required type="text" class="form-control border" [(ngModel)]="produto.tipoProduto"
+                        name="tipoProduto" [formControl]="tipoProduto">
                 </div>
             </div>
             <div class="col">
@@ -60,62 +62,99 @@
             </div>
         </div>
 
-        <!-- Adicione os outros campos do formulário aqui -->
-
         <div class="row">
             <div class="col">
-                <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">{{ isEdit ? 'Atualizar' : 'Salvar' }}</button>
+                <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">{{ isEdit ? 'Atualizar' :
+                    'Salvar' }}</button>
                 <button type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
-                <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar</button>
+                <button *ngIf="isEdit" type="button" class="btn btn-warning"
+                    (click)="cancelarEdicao()">Cancelar</button>
             </div>
         </div>
     </form>
 
-
     <table class="table table-bordered table-striped table-hover">
         <thead>
-          <tr class="table-primary">
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Marca</th>
-            <th>EAN</th>
-            <th>Site</th>
-            <th>ML</th>
-            <th>Shop</th>
-            <th>OK</th>
-            <th>QTD</th>
-            <th>R$ Unit</th>
-            <th>Total</th>
-            <th>Ações</th>
-          </tr>
+            <tr class="table-primary">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>EAN</th>
+                <th>Site</th>
+                <th>ML</th>
+                <th>Shop</th>
+                <th>OK</th>
+                <th>QTD</th>
+                <th>R$ Unit</th>
+                <th>Total</th>
+                <th>Ações</th>
+            </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let produto of produtos" [ngClass]="{'table-hoverable-row': true}">
-            <td>{{ produto.produtoId }}</td>
-            <td>{{ produto.nomeProduto }}</td>
-            <td>{{ produto.tipoProduto }}</td>
-            <td>{{ produto.marcaProduto }}</td>
-            <td>{{ produto.ean }}</td>
-            <td>{{ produto.cadastroSite ? 'OK' : 'NÃO' }}</td>
-            <td>{{ produto.cadastroMl ? 'OK' : 'NÃO' }}</td>
-            <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
-            <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
-            <td>{{ produto.quantidadeEstoque }}</td>
-            <td>{{ produto.valorUnitario }}</td>
-            <td>{{ produto.valorTotal }}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button class="btn btn-sm btn-danger" (click)="removerProduto(produto.produtoId)">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
+            <tr *ngFor="let produto of produtos" [ngClass]="{'table-hoverable-row': true}">
+                <td>{{ produto.produtoId }}</td>
+                <td>{{ produto.nomeProduto }}</td>
+                <td>{{ produto.tipoProduto }}</td>
+                <td>{{ produto.marcaProduto }}</td>
+                <td>{{ produto.ean }}</td>
+                <td>{{ produto.cadastroSite ? 'OK' : 'NÃO' }}</td>
+                <td>{{ produto.cadastroMl ? 'OK' : 'NÃO' }}</td>
+                <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
+                <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
+                <td>{{ produto.quantidadeEstoque }}</td>
+                <td>{{ produto.valorUnitario }}</td>
+                <td>{{ produto.valorTotal }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="removerProduto(produto.produtoId)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
         </tbody>
-      </table>
-      
+    </table>
 
+    <div class="d-flex justify-content-center">
+        <label for="pageSizeSelect">Itens por página:</label>
+        <div class="form-group">
+            <select id="pageSizeSelect" class="form-control" [(ngModel)]="pageSize" (change)="changePageSize()">
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+                <option [value]="50">50</option>
+                <option [value]="100">100</option>
+                <option [value]="500">500</option>
+            </select>
+        </div>
 
+        <nav aria-label="Page navigation example" *ngIf="totalElements > 0">
+            <ul class="pagination">
+                <li class="page-item" [class.disabled]="page === 0">
+                    <a class="page-link" (click)="changePage(0)" aria-label="Primeira Página">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.disabled]="page === 0">
+                    <a class="page-link" (click)="changePage(page)" aria-label="Página Anterior">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.active]="pageIndex === page" *ngFor="let pageIndex of getPageIndexes()">
+                    <a class="page-link" (click)="changePage(pageIndex)">{{ pageIndex + 1 }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="page === totalElements">
+                    <a class="page-link" (click)="changePage(page + 1)" aria-label="Próxima Página">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" [class.disabled]="page === totalElements">
+                    <a class="page-link" (click)="changePage(totalElements)" aria-label="Última Página">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

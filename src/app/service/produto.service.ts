@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environmnet } from 'src/environment/environment';
 import { Produto } from '../model/produto';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Page } from '../model/page';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,17 @@ export class ProdutoService {
 
   constructor(private http: HttpClient) { }
 
-  buscarTodos() {
-    return this.http.get<Produto[]>(this.URL);
-  }
+//  buscarTodos() {
+//    return this.http.get<Produto[]>(this.URL);
+//  }
+
+buscarTodos(page: number, size: number): Observable<Page<Produto>> {
+  const params = new HttpParams()
+    .set('page', String(page))
+    .set('size', String(size));
+
+  return this.http.get<Page<Produto>>(this.URL, { params });
+}
 
   findAllProdutos(): Observable<string[]> {
     return this.http.get<string[]>(this.URL + "/nomes").pipe(
