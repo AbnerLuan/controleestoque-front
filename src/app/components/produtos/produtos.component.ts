@@ -11,15 +11,15 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class ProdutosComponent implements OnInit {
 
-  constructor(private produtoService: ProdutoService, private toastr: ToastrService) {}
+  constructor(private produtoService: ProdutoService, private toastr: ToastrService) { }
 
   produtos: Produto[];
   produto: Produto = {} as Produto;
   isEdit = false;
 
-  page = 0; // Página atual
-  pageSize = 10; // Quantidade de itens por página
-  totalElements = 0; // Total de elementos
+  page = 0;
+  pageSize = 5;
+  totalElements = 0;
 
   nomeProduto = new FormControl(null, Validators.minLength(3));
   tipoProduto = new FormControl(null, Validators.minLength(2));
@@ -33,7 +33,11 @@ export class ProdutosComponent implements OnInit {
     this.produtoService.buscarTodos(this.page, this.pageSize).subscribe(response => {
       this.produtos = response.content;
       this.totalElements = response.totalElements;
-    });
+    },
+      error => {
+        this.showError('Erro ao carregar dados!');
+      }
+    );
   }
 
   salvarProduto() {
@@ -104,5 +108,9 @@ export class ProdutosComponent implements OnInit {
   getPageIndexes(): number[] {
     const totalPages = Math.ceil(this.totalElements / this.pageSize);
     return Array.from({ length: totalPages }, (_, index) => index);
+  }
+
+  showError(message: string): void {
+    this.toastr.error(message);
   }
 }

@@ -38,7 +38,7 @@ export class VendaComponent implements OnInit {
   isEdit = false;
 
   page = 0; // Página atual
-  pageSize = 10; // Quantidade de itens por página
+  pageSize = 5; // Quantidade de itens por página
   totalElements = 0; // Total de elementos
 
   constructor(
@@ -48,19 +48,23 @@ export class VendaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.carregarVendas();
+    this.buscarVendas();
   }
 
-  carregarVendas(): void {
-    this.vendaService.getVendas().subscribe(
-      vendas => {
-        this.vendas = vendas;
+  buscarVendas() {
+    this.vendaService.buscarTodos(this.page, this.pageSize).subscribe(
+      response => {
+        this.vendas = response.content;
+        this.totalElements = response.totalElements;
+        console.log(this.vendas);
+        console.log(this.totalElements);
       },
       error => {
         this.showError('Erro ao carregar dados!');
       }
     );
   }
+  
 
   salvarVenda(): void {
     if (!this.validaCampos()) {
@@ -72,7 +76,7 @@ export class VendaComponent implements OnInit {
       novaVenda => {
         this.vendas.push(novaVenda);
         this.limparFormulario();
-        this.carregarVendas();
+        this.buscarVendas();
         this.showSuccess('Venda Salva com Sucesso!');
       },
       error => {
@@ -89,7 +93,7 @@ export class VendaComponent implements OnInit {
         if (index !== -1) {
           this.vendas[index] = vendaAtualizada;
         }
-        this.carregarVendas();
+        this.buscarVendas();
       },
       error => {
         this.showError('Erro ao atualizar venda: ' + error);
@@ -103,7 +107,7 @@ export class VendaComponent implements OnInit {
       () => {
         this.vendas = this.vendas.filter(v => v.vendaId !== vendaId);
         this.showSuccess('Venda Removida com Sucesso!');
-        this.carregarVendas();
+        this.buscarVendas();
       },
       error => {
         this.showError('Erro ao remover venda: ' + error);
@@ -191,20 +195,20 @@ export class VendaComponent implements OnInit {
   }
 
 
-  getPageIndexes(): number[] {
-    const totalPages = Math.ceil(this.totalElements / this.pageSize);
-    return Array.from({ length: totalPages }, (_, index) => index);
-  }
-
   changePage(page: number) {
     this.page = page;
-    this.carregarVendas();
+    this.buscarVendas(); 
   }
 
   changePageSize(pageSize: number) {
     this.page = 0;
     this.pageSize = pageSize;
-    this.carregarVendas();
+    this.buscarVendas();     
+  }
+
+  getPageIndexes(): number[] {
+    const totalPages = Math.ceil(this.totalElements / this.pageSize);
+    return Array.from({ length: totalPages }, (_, index) => index);
   }
 
 }

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Venda } from '../model/venda';
 import { Observable } from 'rxjs';
 import { environmnet } from 'src/environment/environment';
+import { Page } from '../model/page';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,11 @@ export class VendaService {
 
   constructor(private http: HttpClient) {}
 
-  getVendas(): Observable<Venda[]> {
-    return this.http.get<Venda[]>(this.URL);
+  buscarTodos(page: number, size: number): Observable<Page<Venda>> {
+    const params = new HttpParams()
+    .set('page', String(page))
+    .set('size', String(size));  
+    return this.http.get<Page<Venda>>(this.URL, { params });
   }
 
   getVendaById(id: number): Observable<Venda> {

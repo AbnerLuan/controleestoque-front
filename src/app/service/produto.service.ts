@@ -15,10 +15,6 @@ export class ProdutoService {
 
   constructor(private http: HttpClient) { }
 
-//  buscarTodos() {
-//    return this.http.get<Produto[]>(this.URL);
-//  }
-
 buscarTodos(page: number, size: number): Observable<Page<Produto>> {
   const params = new HttpParams()
     .set('page', String(page))
