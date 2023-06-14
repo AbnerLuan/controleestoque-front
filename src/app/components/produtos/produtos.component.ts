@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Produto } from 'src/app/model/produto';
 import { ProdutoService } from 'src/app/service/produto.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormControl, Validators, } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-produtos',
@@ -11,8 +11,7 @@ import { FormControl, Validators, } from '@angular/forms';
 })
 export class ProdutosComponent implements OnInit {
 
-  constructor(private produtoService: ProdutoService,
-    private toastr: ToastrService,) { }
+  constructor(private produtoService: ProdutoService, private toastr: ToastrService) {}
 
   produtos: Produto[];
   produto: Produto = {} as Produto;
@@ -72,7 +71,7 @@ export class ProdutosComponent implements OnInit {
   removerProduto(id: number) {
     if (confirm('Tem certeza que deseja remover este produto?')) {
       this.produtoService.remover(id).subscribe(() => {
-        this.toastr.success('Produto excludído com sucesso!');
+        this.toastr.success('Produto excluído com sucesso!');
         this.buscarProdutos();
       });
     }
@@ -96,8 +95,9 @@ export class ProdutosComponent implements OnInit {
     this.buscarProdutos();
   }
 
-  changePageSize() {
-    this.page = 0; 
+  changePageSize(pageSize: number) {
+    this.page = 0;
+    this.pageSize = pageSize;
     this.buscarProdutos();
   }
 

@@ -1,0 +1,22 @@
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pagination {
+    margin-right: 10px;
+    margin-top: .9rem;
+  }
+  
+  .page-size-selector {
+    display: flex;
+    margin-top: 0;    
+    margin-left: 1rem; 
+  }
+
+  .pointer-cursor {
+    cursor: pointer !important;
+  }
+  
+

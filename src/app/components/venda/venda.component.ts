@@ -4,18 +4,17 @@ import { Venda } from 'src/app/model/venda';
 import { VendaService } from 'src/app/service/venda.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, mergeMap, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ProdutoService } from 'src/app/service/produto.service';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
-
 
 @Component({
   selector: 'app-venda',
   templateUrl: './venda.component.html',
   styleUrls: ['./venda.component.css']
 })
-export class VendaComponent implements OnInit {  
+export class VendaComponent implements OnInit {
 
   venda: Venda = {
     vendaId: 0,
@@ -37,6 +36,10 @@ export class VendaComponent implements OnInit {
 
   vendas: Venda[] = [];
   isEdit = false;
+
+  page = 0; // Página atual
+  pageSize = 10; // Quantidade de itens por página
+  totalElements = 0; // Total de elementos
 
   constructor(
     private vendaService: VendaService,
@@ -108,7 +111,6 @@ export class VendaComponent implements OnInit {
     );
   }
 
-
   limparFormulario(): void {
     this.venda = {
       vendaId: 0,
@@ -125,7 +127,6 @@ export class VendaComponent implements OnInit {
     this.isEdit = true;
     this.venda = { ...venda };
   }
-
 
   adicionarItem(): void {
     if (this.novoItem.nomeProduto && this.novoItem.quantidade && this.novoItem.valorUnit) {
@@ -165,7 +166,6 @@ export class VendaComponent implements OnInit {
     }
   }
 
-
   showSuccess(message: string): void {
     this.toastr.success(message);
   }
@@ -174,20 +174,37 @@ export class VendaComponent implements OnInit {
     this.toastr.error(message);
   }
 
-
-
   buscarProdutos = (text$: Observable<string>): Observable<string[]> => {
     return text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap(term => this.produtoService.findAllProdutos().pipe(
-        map(produtos => produtos.filter(produto => produto.toLowerCase().includes(term.toLowerCase())))
-      ))
+      switchMap(term =>
+        this.produtoService.findAllProdutos().pipe(
+          map(produtos => produtos.filter(produto => produto.toLowerCase().includes(term.toLowerCase())))
+        )
+      )
     );
   }
 
   selecionarProduto(event: NgbTypeaheadSelectItemEvent): void {
     this.novoItem.nomeProduto = event.item;
+  }
+
+
+  getPageIndexes(): number[] {
+    const totalPages = Math.ceil(this.totalElements / this.pageSize);
+    return Array.from({ length: totalPages }, (_, index) => index);
+  }
+
+  changePage(page: number) {
+    this.page = page;
+    this.carregarVendas();
+  }
+
+  changePageSize(pageSize: number) {
+    this.page = 0;
+    this.pageSize = pageSize;
+    this.carregarVendas();
   }
 
 }

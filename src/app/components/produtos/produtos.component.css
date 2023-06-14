@@ -18,3 +18,9 @@
     margin-right: 0.5rem;
 }
 
+.custom-input {
+    background: none;
+    border: none;
+    outline: none;
+}
+

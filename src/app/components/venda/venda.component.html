@@ -78,9 +78,6 @@
       </div>
     </div>
 
-
-
-
     <!-- Botões de ação -->
     <div class="row">
       <div class="col">
@@ -126,10 +123,8 @@
         </tr>
       </tbody>
     </table>
+    <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
+  (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
   </div>
-
-
-
-
 
 </div>

@@ -116,45 +116,6 @@
             </tr>
         </tbody>
     </table>
-
-    <div class="d-flex justify-content-center">
-        <label for="pageSizeSelect">Itens por página:</label>
-        <div class="form-group">
-            <select id="pageSizeSelect" class="form-control" [(ngModel)]="pageSize" (change)="changePageSize()">
-                <option [value]="10">10</option>
-                <option [value]="20">20</option>
-                <option [value]="50">50</option>
-                <option [value]="100">100</option>
-                <option [value]="500">500</option>
-            </select>
-        </div>
-
-        <nav aria-label="Page navigation example" *ngIf="totalElements > 0">
-            <ul class="pagination">
-                <li class="page-item" [class.disabled]="page === 0">
-                    <a class="page-link" (click)="changePage(0)" aria-label="Primeira Página">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" [class.disabled]="page === 0">
-                    <a class="page-link" (click)="changePage(page)" aria-label="Página Anterior">
-                        <span aria-hidden="true">&lsaquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" [class.active]="pageIndex === page" *ngFor="let pageIndex of getPageIndexes()">
-                    <a class="page-link" (click)="changePage(pageIndex)">{{ pageIndex + 1 }}</a>
-                </li>
-                <li class="page-item" [class.disabled]="page === totalElements">
-                    <a class="page-link" (click)="changePage(page + 1)" aria-label="Próxima Página">
-                        <span aria-hidden="true">&rsaquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" [class.disabled]="page === totalElements">
-                    <a class="page-link" (click)="changePage(totalElements)" aria-label="Última Página">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
+        (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
 </div>
