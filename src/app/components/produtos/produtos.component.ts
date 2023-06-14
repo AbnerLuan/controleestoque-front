@@ -4,6 +4,7 @@ import { ProdutoService } from 'src/app/service/produto.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
@@ -16,6 +17,9 @@ export class ProdutosComponent implements OnInit {
   produtos: Produto[];
   produto: Produto = {} as Produto;
   isEdit = false;
+  options: string[] = ['Nome']; // Exemplo de opções para o campo de seleção
+  selectedOption: string; // Opção selecionada no campo de seleção
+  searchValue: string;
 
   page = 0;
   pageSize = 5;
@@ -26,13 +30,30 @@ export class ProdutosComponent implements OnInit {
   marcaProduto = new FormControl(null, Validators.minLength(2));
 
   ngOnInit() {
-    this.buscarProdutos();
+    this.buscarProdutos();  
+  }
+
+  pesquisar() {
+    if (this.searchValue) {
+      this.produtoService.buscarFiltro(this.searchValue).subscribe(
+        response => {          
+          this.produtos = response; 
+          this.page = 0;
+          this.totalElements = this.produtos.length;  
+        },
+        error => {
+          this.showError('Erro ao pesquisar');
+        }
+      );
+    } else {
+      this.showError('Informe um valor para a pesquisa');
+    }
   }
 
   buscarProdutos() {
     this.produtoService.buscarTodos(this.page, this.pageSize).subscribe(response => {
       this.produtos = response.content;
-      this.totalElements = response.totalElements;
+      this.totalElements = response.totalElements;     
     },
       error => {
         this.showError('Erro ao carregar dados!');

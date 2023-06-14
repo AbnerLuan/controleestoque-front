@@ -66,12 +66,54 @@
             <div class="col">
                 <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">{{ isEdit ? 'Atualizar' :
                     'Salvar' }}</button>
-                <button type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
+                <button *ngIf="!isEdit" type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
                 <button *ngIf="isEdit" type="button" class="btn btn-warning"
-                    (click)="cancelarEdicao()">Cancelar</button>
+                    (click)="cancelarEdicao()">Cancelar Edição</button>
             </div>
         </div>
-    </form>
+    </form>   
+
+    <div class="container mt-4">
+        <form class="form">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <label for="atributoSelect" class="mr-2">Pesquisar por:</label>
+                  </div>
+                  <div class="col">
+                    <select id="atributoSelect" class="form-control" [(ngModel)]="selectedOption" name="selectedOption">
+                      <option value="" disabled>Selecione um atributo</option>
+                      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <input id="valorInput" type="text" class="form-control" [(ngModel)]="searchValue" name="searchValue">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" (click)="pesquisar()">Pesquisar</button>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <p *ngIf="produtos">{{ 'Resultado total: ' + totalElements }}</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      
+      
+      
+    
 
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -83,8 +125,8 @@
                 <th>EAN</th>
                 <th>Site</th>
                 <th>ML</th>
-                <th>Shop</th>
-                <th>OK</th>
+                <th>Shopee</th>
+                <th>Blog</th>
                 <th>QTD</th>
                 <th>R$ Unit</th>
                 <th>Total</th>

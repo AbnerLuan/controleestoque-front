@@ -8,6 +8,7 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 import { Observable } from 'rxjs';
 import { ProdutoService } from 'src/app/service/produto.service';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-venda',
@@ -17,6 +18,15 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 export class VendaComponent implements OnInit {
 
   venda: Venda = {
+    vendaId: 0,
+    nomeCliente: '',
+    canalVenda: '',
+    valorTotalVenda: 0,
+    dataVenda: '',
+    itens: []
+  };
+
+  vendaDetalhes: Venda = {
     vendaId: 0,
     nomeCliente: '',
     canalVenda: '',
@@ -45,6 +55,7 @@ export class VendaComponent implements OnInit {
     private vendaService: VendaService,
     private toastr: ToastrService,
     private produtoService: ProdutoService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -55,16 +66,13 @@ export class VendaComponent implements OnInit {
     this.vendaService.buscarTodos(this.page, this.pageSize).subscribe(
       response => {
         this.vendas = response.content;
-        this.totalElements = response.totalElements;
-        console.log(this.vendas);
-        console.log(this.totalElements);
+        this.totalElements = response.totalElements;       
       },
       error => {
         this.showError('Erro ao carregar dados!');
       }
     );
   }
-  
 
   salvarVenda(): void {
     if (!this.validaCampos()) {
@@ -86,20 +94,24 @@ export class VendaComponent implements OnInit {
   }
 
   atualizarVenda(venda: Venda): void {
-    this.vendaService.atualizarVenda(venda).subscribe(
+    this.vendaService.atualizarVenda(venda).subscribe(      
       vendaAtualizada => {
-        this.showSuccess('Venda Atualizada com Sucesso!');
+        this.showSuccess('Venda Atualizada com Sucesso!');    
+        
         const index = this.vendas.findIndex(v => v.vendaId === vendaAtualizada.vendaId);
         if (index !== -1) {
           this.vendas[index] = vendaAtualizada;
         }
+        this.limparFormulario();
         this.buscarVendas();
+        
       },
       error => {
         this.showError('Erro ao atualizar venda: ' + error);
       }
     );
   }
+  
 
   removerVenda(venda: Venda): void {
     const vendaId = venda.vendaId;
@@ -129,7 +141,7 @@ export class VendaComponent implements OnInit {
 
   editarVenda(venda: Venda) {
     this.isEdit = true;
-    this.venda = { ...venda };
+    this.venda = { ...venda };    
   }
 
   adicionarItem(): void {
@@ -194,21 +206,30 @@ export class VendaComponent implements OnInit {
     this.novoItem.nomeProduto = event.item;
   }
 
-
   changePage(page: number) {
     this.page = page;
-    this.buscarVendas(); 
+    this.buscarVendas();
   }
 
   changePageSize(pageSize: number) {
     this.page = 0;
     this.pageSize = pageSize;
-    this.buscarVendas();     
+    this.buscarVendas();
   }
 
   getPageIndexes(): number[] {
     const totalPages = Math.ceil(this.totalElements / this.pageSize);
     return Array.from({ length: totalPages }, (_, index) => index);
+  }
+
+  openModal(content: any, venda: Venda): void {    
+    this.vendaDetalhes = { ...venda };
+    this.modalService.open(content, { ariaLabelledBy: 'viewSaleModalLabel' });
+  }
+
+  cancelarEdicao() {
+    this.isEdit = false;
+    this.limparFormulario();
   }
 
 }

@@ -23,6 +23,11 @@ buscarTodos(page: number, size: number): Observable<Page<Produto>> {
   return this.http.get<Page<Produto>>(this.URL, { params });
 }
 
+buscarFiltro(valor: string): Observable<any> {
+  const url = `${this.URL}/nome/${valor}`;
+  return this.http.get<any>(url);
+}
+
   findAllProdutos(): Observable<string[]> {
     return this.http.get<string[]>(this.URL + "/nomes").pipe(
       catchError(() => of([]))
