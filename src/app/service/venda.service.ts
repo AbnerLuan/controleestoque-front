@@ -39,4 +39,5 @@ export class VendaService {
     const url = `${this.URL}/${id}`;
     return this.http.delete<void>(url);
   }
+
 }

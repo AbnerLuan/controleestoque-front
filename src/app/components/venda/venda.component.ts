@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemPedido } from 'src/app/model/itempedido';
 import { Venda } from 'src/app/model/venda';
 import { VendaService } from 'src/app/service/venda.service';
+import { ItempedidoService } from 'src/app/service/itempedido.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -41,11 +42,13 @@ export class VendaComponent implements OnInit {
   novoItem: ItemPedido = {
     nomeProduto: '',
     quantidade: null,
-    valorUnit: null
+    valorUnit: null,
+    itemId: null
   };
 
   vendas: Venda[] = [];
   isEdit = false;
+  editandoItem: boolean = false;
 
   page = 0; // Página atual
   pageSize = 5; // Quantidade de itens por página
@@ -55,7 +58,8 @@ export class VendaComponent implements OnInit {
     private vendaService: VendaService,
     private toastr: ToastrService,
     private produtoService: ProdutoService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private itempedidoService: ItempedidoService,
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +70,7 @@ export class VendaComponent implements OnInit {
     this.vendaService.buscarTodos(this.page, this.pageSize).subscribe(
       response => {
         this.vendas = response.content;
-        this.totalElements = response.totalElements;       
+        this.totalElements = response.totalElements;
       },
       error => {
         this.showError('Erro ao carregar dados!');
@@ -93,25 +97,23 @@ export class VendaComponent implements OnInit {
     );
   }
 
-  atualizarVenda(venda: Venda): void {
-    this.vendaService.atualizarVenda(venda).subscribe(      
+  atualizarVenda(venda: Venda): void {    
+    this.vendaService.atualizarVenda(venda).subscribe(
       vendaAtualizada => {
-        this.showSuccess('Venda Atualizada com Sucesso!');    
-        
+        this.showSuccess('Venda Atualizada com Sucesso!');
         const index = this.vendas.findIndex(v => v.vendaId === vendaAtualizada.vendaId);
         if (index !== -1) {
           this.vendas[index] = vendaAtualizada;
         }
         this.limparFormulario();
         this.buscarVendas();
-        
       },
       error => {
         this.showError('Erro ao atualizar venda: ' + error);
       }
     );
   }
-  
+
 
   removerVenda(venda: Venda): void {
     const vendaId = venda.vendaId;
@@ -136,12 +138,18 @@ export class VendaComponent implements OnInit {
       dataVenda: '',
       itens: []
     };
+    this.novoItem = {      
+        nomeProduto: '',
+        quantidade: null,
+        valorUnit: null,
+        itemId: null
+      };    
     this.isEdit = false;
   }
 
   editarVenda(venda: Venda) {
     this.isEdit = true;
-    this.venda = { ...venda };    
+    this.venda = { ...venda };
   }
 
   adicionarItem(): void {
@@ -158,7 +166,9 @@ export class VendaComponent implements OnInit {
   }
 
   editarItem(item: any, index: number) {
-    this.novoItem = {
+    this.editandoItem = true;
+    this.novoItem = {      
+      itemId: item.itemId,
       nomeProduto: item.nomeProduto,
       quantidade: item.quantidade,
       valorUnit: item.valorUnit
@@ -168,12 +178,6 @@ export class VendaComponent implements OnInit {
 
   validaCampos(): boolean {
     return this.nomeCliente.valid && this.canalVenda.valid;
-  }
-
-  confirmarExclusaoItem(index: number): void {
-    if (confirm('Tem certeza de que deseja remover este item?')) {
-      this.removerItem(index);
-    }
   }
 
   confirmarExclusaoVenda(venda: Venda): void {
@@ -222,7 +226,7 @@ export class VendaComponent implements OnInit {
     return Array.from({ length: totalPages }, (_, index) => index);
   }
 
-  openModal(content: any, venda: Venda): void {    
+  openModal(content: any, venda: Venda): void {
     this.vendaDetalhes = { ...venda };
     this.modalService.open(content, { ariaLabelledBy: 'viewSaleModalLabel' });
   }
@@ -230,6 +234,16 @@ export class VendaComponent implements OnInit {
   cancelarEdicao() {
     this.isEdit = false;
     this.limparFormulario();
+  }
+
+  excluirItem(itemId: number, index: number) {
+    if (confirm('Tem certeza de que deseja remover este item?')) {
+      this.itempedidoService.excluirItem(itemId).subscribe(() => {
+        this.venda.itens.splice(index, 1);
+        this.toastr.success("Item " + itemId + " Excluido com sucesso!");        
+      });
+    }
+
   }
 
 }
