@@ -10,10 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProdutosComponent } from './components/produtos/produtos.component';
+import { ProdutoComponent } from './components/produto/produto.component';
 import { HomeComponent } from './components/home/home.component';
 import { VendaComponent } from './components/venda/venda.component';
-import { ComprasComponent } from './components/compras/compras.component';
+import { CompraComponent } from './components/compra/compra.component';
 import { PaginacaoComponent } from './components/paginacao/paginacao.component';
 import { GastoComponent } from './components/gasto/gasto.component';
 import { FiadoComponent } from './components/fiado/fiado.component';
@@ -22,10 +22,10 @@ import { FiadoComponent } from './components/fiado/fiado.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    ProdutosComponent,
+    ProdutoComponent,
     HomeComponent,
     VendaComponent,
-    ComprasComponent,
+    CompraComponent,
     PaginacaoComponent,
     GastoComponent,
     FiadoComponent

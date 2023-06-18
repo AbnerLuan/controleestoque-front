@@ -6,11 +6,11 @@ import { FormControl, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-produtos',
-  templateUrl: './produtos.component.html',
-  styleUrls: ['./produtos.component.css']
+  selector: 'app-produto',
+  templateUrl: './produto.component.html',
+  styleUrls: ['./produto.component.css']
 })
-export class ProdutosComponent implements OnInit {
+export class ProdutoComponent implements OnInit {
 
   constructor(private produtoService: ProdutoService, private toastr: ToastrService) { }
 
