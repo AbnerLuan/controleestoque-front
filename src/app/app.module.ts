@@ -15,6 +15,8 @@ import { HomeComponent } from './components/home/home.component';
 import { VendaComponent } from './components/venda/venda.component';
 import { ComprasComponent } from './components/compras/compras.component';
 import { PaginacaoComponent } from './components/paginacao/paginacao.component';
+import { GastoComponent } from './components/gasto/gasto.component';
+import { FiadoComponent } from './components/fiado/fiado.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { PaginacaoComponent } from './components/paginacao/paginacao.component';
     HomeComponent,
     VendaComponent,
     ComprasComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    GastoComponent,
+    FiadoComponent
   ],
   imports: [
     BrowserModule,

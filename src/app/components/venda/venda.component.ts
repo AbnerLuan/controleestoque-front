@@ -19,25 +19,31 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class VendaComponent implements OnInit {
 
   venda: Venda = {
-    vendaId: 0,
+    vendaId: null,
     nomeCliente: '',
     canalVenda: '',
-    valorTotalVenda: 0,
+    valorFrete: null,
+    valorTarifa: null,
+    valorTotalVenda: null,
     dataVenda: '',
     itens: []
   };
 
   vendaDetalhes: Venda = {
-    vendaId: 0,
+    vendaId: null,
     nomeCliente: '',
     canalVenda: '',
-    valorTotalVenda: 0,
+    valorFrete: null,
+    valorTarifa: null,
+    valorTotalVenda: null,
     dataVenda: '',
     itens: []
   };
 
   nomeCliente = new FormControl(null, Validators.minLength(3));
   canalVenda = new FormControl(null, Validators.minLength(1));
+  valorFrete = new FormControl(null, Validators.min(1));
+  valorTarifa = new FormControl(null, Validators.min(1));
 
   novoItem: ItemPedido = {
     nomeProduto: '',
@@ -97,7 +103,7 @@ export class VendaComponent implements OnInit {
     );
   }
 
-  atualizarVenda(venda: Venda): void {    
+  atualizarVenda(venda: Venda): void {
     this.vendaService.atualizarVenda(venda).subscribe(
       vendaAtualizada => {
         this.showSuccess('Venda Atualizada com Sucesso!');
@@ -131,19 +137,21 @@ export class VendaComponent implements OnInit {
 
   limparFormulario(): void {
     this.venda = {
-      vendaId: 0,
+      vendaId: null,
       nomeCliente: '',
       canalVenda: '',
-      valorTotalVenda: 0,
+      valorFrete: null,
+      valorTarifa: null,
+      valorTotalVenda: null,
       dataVenda: '',
       itens: []
     };
-    this.novoItem = {      
-        nomeProduto: '',
-        quantidade: null,
-        valorUnit: null,
-        itemId: null
-      };    
+    this.novoItem = {
+      nomeProduto: '',
+      quantidade: null,
+      valorUnit: null,
+      itemId: null
+    };
     this.isEdit = false;
   }
 
@@ -156,18 +164,15 @@ export class VendaComponent implements OnInit {
     if (this.novoItem.nomeProduto && this.novoItem.quantidade && this.novoItem.valorUnit) {
       this.venda.itens.push({ ...this.novoItem });
       this.novoItem = { nomeProduto: '', quantidade: 0, valorUnit: 0 };
+      //this.editandoItem = false;
     } else {
       this.showError('Preencha todos os campos do item corretamente.');
     }
-  }
-
-  removerItem(index: number): void {
-    this.venda.itens.splice(index, 1);
-  }
+  } 
 
   editarItem(item: any, index: number) {
     this.editandoItem = true;
-    this.novoItem = {      
+    this.novoItem = {
       itemId: item.itemId,
       nomeProduto: item.nomeProduto,
       quantidade: item.quantidade,
@@ -234,16 +239,27 @@ export class VendaComponent implements OnInit {
   cancelarEdicao() {
     this.isEdit = false;
     this.limparFormulario();
+    this.editandoItem = false;
+    this.buscarVendas();
   }
 
-  excluirItem(itemId: number, index: number) {
-    if (confirm('Tem certeza de que deseja remover este item?')) {
-      this.itempedidoService.excluirItem(itemId).subscribe(() => {
-        this.venda.itens.splice(index, 1);
-        this.toastr.success("Item " + itemId + " Excluido com sucesso!");        
-      });
+  excluirItem(item: any, index: number) {
+    if (!this.isEdit) {
+      this.venda.itens.splice(index, 1);
+    } else {
+      if (confirm('Tem certeza de que deseja remover este item?')) {        
+        this.itempedidoService.excluirItem(item).subscribe(
+          () => {
+            this.venda.itens.splice(index, 1);
+            this.toastr.success("Item " + item + " excluído com sucesso!");
+          },
+          (error) => {
+          }
+        );
+      }
     }
-
   }
+  
+  
 
 }

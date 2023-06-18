@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Venda } from '../model/venda';
 import { Observable } from 'rxjs';
-import { environmnet } from 'src/environment/environment';
+import { environment } from 'src/environment/environment';
 import { Page } from '../model/page';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Page } from '../model/page';
 })
 export class VendaService {
 
-  private URL = environmnet.url + 'vendas';
+  private URL = environment.url + 'vendas';
 
   constructor(private http: HttpClient) {}
 

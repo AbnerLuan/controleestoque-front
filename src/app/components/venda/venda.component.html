@@ -13,20 +13,33 @@
       </div>
       <div class="col">
         <div class="form-group">
-          <div class="form-group">
-            <label for="canalVendaSelect">Canal de Venda:</label>
-            <select id="canalVendaSelect" class="form-control" name="canalVenda" [(ngModel)]="venda.canalVenda">
-              <option value="LOJA">LOJA</option>
-              <option value="WHATSAPP">WHATSAPP</option>
-              <option value="ML">ML</option>
-              <option value="SHOPEE">SHOPEE</option>
-              <option value="AMAZON">AMAZON</option>
-              <option value="OUTROS">OUTROS</option>
-            </select>
-          </div>
+          <label>Valor Frete</label>
+          <input required type="number" class="form-control border" [(ngModel)]="venda.valorFrete" name="valorFrete"
+            id="valorFrete" [formControl]="valorFrete">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>Valor Tarifa</label>
+          <input required type="number" class="form-control border" [(ngModel)]="venda.valorTarifa" name="valorTarifa"
+            id="valorTarifa" [formControl]="valorTarifa">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="canalVendaSelect">Canal de Venda:</label>
+          <select id="canalVendaSelect" class="form-control" name="canalVenda" [(ngModel)]="venda.canalVenda">
+            <option value="LOJA">LOJA</option>
+            <option value="WHATSAPP">WHATSAPP</option>
+            <option value="ML">ML</option>
+            <option value="SHOPEE">SHOPEE</option>
+            <option value="AMAZON">AMAZON</option>
+            <option value="OUTROS">OUTROS</option>
+          </select>
         </div>
       </div>
     </div>
+
 
     <!-- Lista de Produtos -->
     <div class="row">
@@ -51,9 +64,10 @@
                 <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-danger btn-sm" (click)="excluirItem(item.itemId, i)">
+                <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm" (click)="excluirItem(item.itemId, i)">
                   <i class="bi bi-trash"></i>
-                </button>
+                </button>              
+
               </td>
               <td>{{ item.itemId }}</td>
             </tr>
@@ -73,15 +87,13 @@
                 <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
                   <i class="bi bi-plus"></i> {{ editandoItem ? 'Atualizar Item' : '' }}
                 </button>
-              </td> 
-              <td>{{ novoItem.itemId }}</td>            
+              </td>
+              <td>{{ novoItem.itemId }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-
-
 
     <!-- Botões de ação -->
     <div class="row">
@@ -102,6 +114,8 @@
         <tr class="table-primary">
           <th>ID</th>
           <th>Nome do Cliente</th>
+          <th>Valor Frete</th>
+          <th>Valor Tarifa</th>
           <th>Canal de Venda</th>
           <th>Valor Total da Venda</th>
           <th>Data da Venda</th>
@@ -112,6 +126,8 @@
         <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
           <td>{{ vendaItem.vendaId }}</td>
           <td>{{ vendaItem.nomeCliente }}</td>
+          <td>{{ vendaItem.valorFrete }}</td>
+          <td>{{ vendaItem.valorTarifa }}</td>
           <td>{{ vendaItem.canalVenda }}</td>
           <td>{{ vendaItem.valorTotalVenda }}</td>
           <td>{{ vendaItem.dataVenda }}</td>
@@ -147,19 +163,25 @@
     </h3>
   </div>
   <div class="modal-body">
-    <h5>Informações da Venda:</h5>
-    <p><strong>Nome do Cliente:</strong> {{ vendaDetalhes.nomeCliente }}</p>
-    <p><strong>Canal de Venda:</strong> {{ vendaDetalhes.canalVenda }}</p>
-    <p><strong>Valor Total da Venda:</strong> {{ vendaDetalhes.valorTotalVenda }}</p>
-    <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>
+    <div class="row">
+      <div class="col">
+        <p><strong>Cliente:</strong> {{ vendaDetalhes.nomeCliente }}</p>
+        <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete }}</p>
+        <p><strong>Canal de Venda:</strong> {{ vendaDetalhes.canalVenda }}</p>
+      </div>
+      <div class="col">
+        <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda }}</p>
+        <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa }}</p>
+        <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>
+      </div>
+    </div>
 
-    <h5>Itens da Venda:</h5>
     <table class="table">
       <thead>
         <tr>
           <th>Nome do Produto</th>
           <th>Quantidade</th>
-          <th>Valor Unitário</th>
+          <th>R$ Unit</th>
         </tr>
       </thead>
       <tbody>

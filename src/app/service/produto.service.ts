@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environmnet } from 'src/environment/environment';
+import { environment } from 'src/environment/environment';
 import { Produto } from '../model/produto';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { Page } from '../model/page';
 })
 export class ProdutoService {
 
-  private URL = environmnet.url + 'produtos';
+  private URL = environment.url + 'produtos';
 
   constructor(private http: HttpClient) { }
 
