@@ -1,1 +1,172 @@
-<p>fiado works!</p>
+<div class="container mt-4">
+    <h3>Fiado (Valores a Receber)</h3>
+    <form #fiadoForm="ngForm" class="form" (ngSubmit)="submitFiado()">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Nome Cliente</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="fiado.nomeCliente"
+                        name="nomeCliente" [formControl]="nomeCliente">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Valor Total</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="fiado.valorTotal"
+                        name="valorTotal" [formControl]="valorTotal" mask="separator.2" thousandSeparator="." prefix="R$">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Celular Cliente (opcional)</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="fiado.celularCliente"
+                        name="celuarCliente" mask="(00) 00000-0000" placeholder="(11)9999-9999">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Observacoes (opcional)</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="fiado.observacoes"
+                        name="nomeCliente">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h4>Pagamentos</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pagamento of pagamentos; let i = index">
+                            <td>{{ pagamento.pagamentoId }}</td>
+                            <td>{{ pagamento.dataDoPagamento }}</td>
+                            <td>{{ pagamento.valorPagamento | currency }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="excluirPagamento(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input required type="text" mask="separator.2" thousandSeparator="." prefix="R$" class="form-control border"
+                                    [(ngModel)]="novoPagamento.valor" name="valorPagamento"
+                                    placeholder="Digite aqui o valor do pagamento..." >
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="adicionarPagamento()">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> {{ isEdit ? 'Atualizar' : 'Salvar' }}
+                </button>
+                <button *ngIf="!isEdit" type="button" class="btn btn-secondary"
+                    (click)="limparFormulario()">Limpar</button>
+                <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar
+                    Edição</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
+        <thead>
+            <tr class="table-primary">
+                <th>ID</th>
+                <th>Nome Cliente</th>
+                <th>Celular Cliente</th>
+                <th>Data Registro</th>
+                <th>VALOR TOTAL</th>
+                <th>VALOR PENDENTE</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let fiadoItem of fiados" [ngClass]="{'table-hoverable-row': true}">
+                <td>{{ fiadoItem.fiadoId }}</td>
+                <td>{{ fiadoItem.nomeCliente }}</td>
+                <td>{{ fiadoItem.celularCliente | mask: '(00) 00000-0000'}}</td>
+                <td>{{ fiadoItem.dataRegistro }}</td>
+                <td>{{ fiadoItem.valorTotal | currency }}</td>
+                <td>{{ fiadoItem.valorPendente | currency }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="carregarDadosParaEdicao(fiadoItem)">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="excluirFiado(fiadoItem.fiadoId)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                    <button class="btn btn-sm btn-success" (click)="openModal(fiadoItem)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal de Visualização -->
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Detalhes do Gasto</h5>
+            <p type="button" class="close" aria-label="Fechar" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+            </p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <p><strong>ID: </strong>{{ selectedFiado?.fiadoId }}</p>
+                    <p><strong>Data Registro: </strong> {{ selectedFiado?.dataRegistro }}</p>
+                    <p><strong>Valor Pendente: </strong>{{ selectedFiado?.valorPendente }}</p>
+                </div>
+                <div class="col">
+                    <p><strong>Nome Cliente: </strong>{{ selectedFiado?.nomeCliente }}</p>
+                    <p><strong>Celular Cliente: </strong>{{ selectedFiado?.celularCliente }}</p>
+                    <p><strong>Valor Total: </strong>{{ selectedFiado?.valorTotal }}</p>
+                </div>
+                <hr>
+                <p>{{ selectedFiado?.observacoes }}</p>
+            </div>
+
+            <hr>
+
+            <h6>Pagamentos:</h6>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Valor</th>
+                        <th>Data Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pagamento of selectedFiado?.pagamento">
+                        <td>{{ pagamento.pagamentoId }}</td>
+                        <td>{{ pagamento.valorPagamento }}</td>
+                        <td>{{ pagamento.dataDoPagamento }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fechar</button>
+        </div>
+    </ng-template>

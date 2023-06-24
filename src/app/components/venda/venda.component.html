@@ -14,15 +14,15 @@
       <div class="col">
         <div class="form-group">
           <label>Valor Frete</label>
-          <input required type="number" class="form-control border" [(ngModel)]="venda.valorFrete" name="valorFrete"
-            id="valorFrete" [formControl]="valorFrete">
+          <input required type="text" class="form-control border" [(ngModel)]="venda.valorFrete" name="valorFrete"
+            id="valorFrete" [formControl]="valorFrete" mask="separator.2" thousandSeparator="." prefix="R$">
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label>Valor Tarifa</label>
-          <input required type="number" class="form-control border" [(ngModel)]="venda.valorTarifa" name="valorTarifa"
-            id="valorTarifa" [formControl]="valorTarifa">
+          <input required type="text" class="form-control border" [(ngModel)]="venda.valorTarifa" name="valorTarifa"
+            id="valorTarifa" [formControl]="valorTarifa" mask="separator.2" thousandSeparator="." prefix="R$">
         </div>
       </div>
       <div class="col">
@@ -59,7 +59,7 @@
             <tr *ngFor="let item of venda.itens; let i = index">
               <td>{{ item.nomeProduto }}</td>
               <td>{{ item.quantidade }}</td>
-              <td>{{ item.valorUnit }}</td>
+              <td>{{ item.valorUnit | currency  }}</td>
               <td>
                 <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
                   <i class="bi bi-pencil"></i>
@@ -81,7 +81,7 @@
                   name="quantidade">
               </td>
               <td>
-                <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario">
+                <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario" mask="separator.2" thousandSeparator="." prefix="R$">
               </td>
               <td>
                 <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
@@ -107,7 +107,7 @@
     </div>
   </form>
 
-  <div class="mt-4">
+  <div class="mt-4" [ngClass]="{'disable-click': isEdit}">
     <h4>Vendas Cadastradas</h4>
     <table class="table table-bordered table-striped table-hover">
       <thead>
@@ -126,10 +126,10 @@
         <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
           <td>{{ vendaItem.vendaId }}</td>
           <td>{{ vendaItem.nomeCliente }}</td>
-          <td>{{ vendaItem.valorFrete }}</td>
-          <td>{{ vendaItem.valorTarifa }}</td>
+          <td>{{ vendaItem.valorFrete | currency  }}</td>
+          <td>{{ vendaItem.valorTarifa | currency  }}</td>
           <td>{{ vendaItem.canalVenda }}</td>
-          <td>{{ vendaItem.valorTotalVenda }}</td>
+          <td>{{ vendaItem.valorTotalVenda | currency  }}</td>
           <td>{{ vendaItem.dataVenda }}</td>
           <td>
             <button type="button" class="btn btn-sm btn-primary" (click)="editarVenda(vendaItem)">
@@ -138,7 +138,7 @@
             <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusaoVenda(vendaItem)">
               <i class="bi bi-trash"></i>
             </button>
-            <button type="button" class="btn btn-sm btn-info" (click)="openModal(viewSaleModal, vendaItem)">
+            <button type="button" class="btn btn-sm btn-success" (click)="openModal(viewSaleModal, vendaItem)">
               <i class="bi bi-eye"></i>
             </button>
 
@@ -166,12 +166,12 @@
     <div class="row">
       <div class="col">
         <p><strong>Cliente:</strong> {{ vendaDetalhes.nomeCliente }}</p>
-        <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete }}</p>
+        <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete | currency  }}</p>
         <p><strong>Canal de Venda:</strong> {{ vendaDetalhes.canalVenda }}</p>
       </div>
       <div class="col">
-        <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda }}</p>
-        <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa }}</p>
+        <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda | currency  }}</p>
+        <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa | currency  }}</p>
         <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>
       </div>
     </div>
@@ -188,7 +188,7 @@
         <tr *ngFor="let item of vendaDetalhes.itens">
           <td>{{ item.nomeProduto }}</td>
           <td>{{ item.quantidade }}</td>
-          <td>{{ item.valorUnit }}</td>
+          <td>{{ item.valorUnit | currency  }}</td>
         </tr>
       </tbody>
     </table>

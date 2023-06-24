@@ -168,7 +168,7 @@ export class VendaComponent implements OnInit {
     } else {
       this.showError('Preencha todos os campos do item corretamente.');
     }
-  } 
+  }
 
   editarItem(item: any, index: number) {
     this.editandoItem = true;
@@ -244,22 +244,21 @@ export class VendaComponent implements OnInit {
   }
 
   excluirItem(item: any, index: number) {
-    if (!this.isEdit) {
+    if (!item || item.itemId === null) {
       this.venda.itens.splice(index, 1);
     } else {
-      if (confirm('Tem certeza de que deseja remover este item?')) {        
+      if (confirm('Tem certeza de que deseja remover este item?')) {
         this.itempedidoService.excluirItem(item).subscribe(
           () => {
             this.venda.itens.splice(index, 1);
-            this.toastr.success("Item " + item + " excluído com sucesso!");
+            this.toastr.success("Item " + item.itemId + " excluído com sucesso!");
           },
           (error) => {
+            // Lida com erros ao chamar o serviço de exclusão
           }
         );
       }
     }
   }
-  
-  
 
 }

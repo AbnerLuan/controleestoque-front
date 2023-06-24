@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,13 @@ import { VendaComponent } from './components/venda/venda.component';
 import { CompraComponent } from './components/compra/compra.component';
 import { PaginacaoComponent } from './components/paginacao/paginacao.component';
 import { GastoComponent } from './components/gasto/gasto.component';
+import { CommonModule } from '@angular/common';
 import { FiadoComponent } from './components/fiado/fiado.component';
+import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [
@@ -42,9 +48,16 @@ import { FiadoComponent } from './components/fiado/fiado.component';
     }),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    CommonModule,
+    NgxMaskDirective, 
+    NgxMaskPipe, 
+    
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
+    provideEnvironmentNgxMask()],   
   bootstrap: [AppComponent]
 })
 export class AppModule { }

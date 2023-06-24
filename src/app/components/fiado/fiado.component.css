@@ -1,0 +1,34 @@
+.container {
+    margin-top: 2rem;
+}
+
+.form {
+    margin-bottom: 2rem;
+}
+
+.row {
+    margin-bottom: 1rem;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-primary-with-icon,
+.btn-secondary-with-icon,
+.btn-danger-with-icon,
+.btn-success-with-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+.custom-input {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.disable-click {
+    pointer-events: none;
+    opacity: 0.6;
+}

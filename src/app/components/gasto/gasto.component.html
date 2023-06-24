@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <h3>Gastos</h3>
-    <form (ngSubmit)="salvarGastos()" class="form">
+    <form (ngSubmit)="salvarGasto()" class="form">
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label>Valor</label>
                     <input required type="text" class="form-control border" [(ngModel)]="gasto.valor"
-                        name="valor" [formControl]="valor">
+                        name="valor" [formControl]="valor" mask="separator.2" thousandSeparator="." prefix="R$">
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <tr *ngFor="let gastoItem of gastos" [ngClass]="{'table-hoverable-row': true}">
                 <td>{{ gastoItem.gastoId }}</td>
                 <td>{{ gastoItem.descricao }}</td>
-                <td>{{ gastoItem.valor }}</td>
+                <td>{{ gastoItem.valor | currency }}</td>
                 <td>{{ gastoItem.dataRegistro }}</td>              
                 <td>                  
                     <button class="btn btn-sm btn-danger" (click)="excluirGasto(gastoItem.gastoId)">

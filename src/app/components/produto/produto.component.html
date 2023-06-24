@@ -73,7 +73,7 @@
         </div>
     </form>   
 
-    <div class="container mt-4">
+    <div class="container mt-4" [ngClass]="{'disable-click': isEdit}">
         <form class="form">
           <div class="row">
             <div class="col">
@@ -108,14 +108,11 @@
             </div>
           </div>
         </form>
-      </div>
-      
-      
-      
-      
-    
+      </div> 
 
-    <table class="table table-bordered table-striped table-hover">
+      
+      
+    <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
         <thead>
             <tr class="table-primary">
                 <th>ID</th>
@@ -145,8 +142,8 @@
                 <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
                 <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
                 <td>{{ produto.quantidadeEstoque }}</td>
-                <td>{{ produto.valorUnitario }}</td>
-                <td>{{ produto.valorTotal }}</td>
+                <td>{{ produto.valorUnitario | currency }}</td>
+                <td>{{ produto.valorTotal | currency  }}</td>
                 <td>
                     <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
                         <i class="bi bi-pencil"></i>

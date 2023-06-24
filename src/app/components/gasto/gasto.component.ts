@@ -11,13 +11,13 @@ import { GastoService } from 'src/app/service/gasto.service';
 })
 export class GastoComponent implements OnInit {
 
-  
+
 
   constructor(private gastoService: GastoService,
     private toastr: ToastrService,
-    ) {}
+  ) { }
 
-  gastos: Gasto[]; 
+  gastos: Gasto[];
   gasto: Gasto = {} as Gasto;
 
   page = 0;
@@ -27,47 +27,45 @@ export class GastoComponent implements OnInit {
   descricao = new FormControl('', Validators.minLength(3));
   valor = new FormControl('', Validators.minLength(1));
 
-  ngOnInit(): void { 
-    this.findAll();   
+  ngOnInit(): void {
+    this.findAll();
   }
 
   public findAll() {
-    
-      this.gastoService.buscarTodos(this.page, this.pageSize).subscribe(response => {
-        this.gastos = response.content;
-        this.totalElements = response.totalElements;     
-      },
-        error => {
-          this.toastr.error('Erro ao carregar dados!');
-        }
-      );
-    
+
+    this.gastoService.buscarTodos(this.page, this.pageSize).subscribe(response => {
+      this.gastos = response.content;
+      this.totalElements = response.totalElements;
+    },
+      error => {
+        this.toastr.error('Erro ao carregar dados!');
+      }
+    );
+
 
   }
 
-  salvarGastos() {
+  salvarGasto() {
     this.gastoService.salvar(this.gasto).subscribe(
       () => {
         this.limparFormulario();
         this.findAll();
-        this.toastr.success('Produto salvo com sucesso!');
+        this.toastr.success('Gasto salvo com sucesso!');
       },
       error => {
-        this.toastr.error('Erro ao salvar o produto: ' + error.status + ' - ' + error.message);
+        this.toastr.error('Erro ao salvar o gasto: ' + error.status + ' - ' + error.message);
       }
     );
   }
 
-  public excluirGasto(gastoId : number) {    
-      if (confirm('Tem certeza que deseja remover este produto?')) {
-        this.gastoService.remover(gastoId).subscribe(() => {
-          this.toastr.success('Gasto excluído com sucesso!');
-          this.findAll();
-        });
-      }
+  public excluirGasto(gastoId: number) {
+    if (confirm('Tem certeza que deseja remover este produto?')) {
+      this.gastoService.remover(gastoId).subscribe(() => {
+        this.toastr.success('Gasto excluído com sucesso!');
+        this.findAll();
+      });
     }
-
-
+  }
 
   public limparFormulario() {
     this.gasto = {} as Gasto;

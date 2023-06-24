@@ -1,6 +1,8 @@
 .btn {
-    margin-right: 5px;
-  }
+  margin-right: 5px;
+}
 
-  
-  
+.disable-click {
+  pointer-events: none;
+  opacity: 0.6;
+}

@@ -24,3 +24,7 @@
     outline: none;
 }
 
+.disable-click {
+    pointer-events: none;
+    opacity: 0.6;
+}
