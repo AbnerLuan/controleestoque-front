@@ -22,6 +22,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "chart.js": "^3.9.1",
+    "ng2-charts": "^3.1.2",
     "ngx-bootstrap": "^10.2.0",
     "ngx-mask": "^15.0.2",
     "ngx-toastr": "^16.0.2",
