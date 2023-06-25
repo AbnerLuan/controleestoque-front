@@ -6,14 +6,16 @@ import { VendaComponent } from './components/venda/venda.component';
 import { CompraComponent } from './components/compra/compra.component';
 import { GastoComponent } from './components/gasto/gasto.component';
 import { FiadoComponent } from './components/fiado/fiado.component';
+import { CaixaComponent } from './components/caixa/caixa.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent }, // Rota para a página Home
-  { path: 'produtos', component: ProdutoComponent }, // Rota para a página Produtos
-  { path: 'vendas', component: VendaComponent }, // Rota para a página Vendas
-  { path: 'compras', component: CompraComponent }, // Rota para a página Compras
- { path: 'gastos', component: GastoComponent }, // Rota para a página Gastos
- { path: 'fiados', component: FiadoComponent }, // Rota para a página Fiado
+  { path: '', component: HomeComponent },
+  { path: 'produtos', component: ProdutoComponent }, 
+  { path: 'vendas', component: VendaComponent }, 
+  { path: 'compras', component: CompraComponent },
+ { path: 'gastos', component: GastoComponent }, 
+ { path: 'fiados', component: FiadoComponent }, 
+ { path: 'caixa', component: CaixaComponent }, 
 ];
 
 @NgModule({

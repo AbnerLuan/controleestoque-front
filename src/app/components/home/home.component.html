@@ -1,48 +1,73 @@
 <div class="container">
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="card">
-          <h5 class="card-header">Faturamento</h5>
-          <div class="card-body">
-            <h6 class="card-title">Anual:</h6>
-            <h6 class="card-title">Média Mensal:</h6>
-            <h6 class="card-title">Mês Atual:</h6>  
-          </div>
-          <div class="card-footer text-muted">Rodapé do card</div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card">
+        <h5 class="card-header header-faturamento">Faturamento</h5>
+        <div class="card-body">
+          <h6 class="card-title">Anual: <span
+              [ngClass]="{'positive': relatorio.faturamentoAnual > 0, 'negative': relatorio.faturamentoAnual < 0}">{{
+              relatorio.faturamentoAnual | currency }}</span></h6>
+          <h6 class="card-title">Média Mensal: <span
+              [ngClass]="{'positive': relatorio.faturamentoMedioMensal > 0, 'negative': relatorio.faturamentoMedioMensal < 0}">{{
+              relatorio.faturamentoMedioMensal | currency }}</span></h6>
+          <h6 class="card-title">Mês Atual: <span
+              [ngClass]="{'positive': relatorio.faturamentoMesAtual > 0, 'negative': relatorio.faturamentoMesAtual < 0}">{{
+              relatorio.faturamentoMesAtual | currency }}</span></h6>
         </div>
+        <div class="card-footer text-muted"></div>
       </div>
-      <div class="col-sm-3">
-        <div class="card">
-          <h5 class="card-header">Gastos</h5>
-          <div class="card-body">
-            <h6 class="card-title">Anual:</h6>
-            <h6 class="card-title">Média Mensal:</h6>
-            <h6 class="card-title">Mês Atual:</h6>  
-          </div>
-          <div class="card-footer text-muted">Rodapé do card</div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <h5 class="card-header header-gastos">Gastos</h5>
+        <div class="card-body">
+          <h6 class="card-title">Anual: <span
+              [ngClass]="{'positive': relatorio.gastosAnual > 0, 'negative': relatorio.gastosAnual < 0}">{{
+              relatorio.gastosAnual | currency }}</span></h6>
+          <h6 class="card-title">Média Mensal: <span
+              [ngClass]="{'positive': relatorio.gastosMedioMensal > 0, 'negative': relatorio.gastosMedioMensal < 0}">{{
+              relatorio.gastosMedioMensal | currency }}</span></h6>
+          <h6 class="card-title">Mês Atual: <span
+              [ngClass]="{'positive': relatorio.gastosMesAtual > 0, 'negative': relatorio.gastosMesAtual < 0}">{{
+              relatorio.gastosMesAtual | currency }}</span></h6>
         </div>
+        <div class="card-footer text-muted"></div>
       </div>
-      <div class="col-sm-3">
-        <div class="card">
-          <h5 class="card-header">Lucros</h5>
-          <div class="card-body">
-            <h6 class="card-title">Anual:</h6>
-            <h6 class="card-title">Média Mensal:</h6>
-            <h6 class="card-title">Mês Atual:</h6>            
-          </div>
-          <div class="card-footer text-muted">Rodapé do card</div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <h5 class="card-header header-lucros">Lucros</h5>
+        <div class="card-body">
+          <h6 class="card-title">Anual: <span
+              [ngClass]="{'positive': relatorio.lucroAnual > 0, 'negative': relatorio.lucroAnual < 0}">{{
+              relatorio.lucroAnual | currency }}</span></h6>
+          <h6 class="card-title">Média Mensal: <span
+              [ngClass]="{'positive': relatorio.lucroMedioMensal > 0, 'negative': relatorio.lucroMedioMensal < 0}">{{
+              relatorio.lucroMedioMensal | currency }}</span></h6>
+          <h6 class="card-title">Mês Atual: <span
+              [ngClass]="{'positive': relatorio.lucroMesAtual > 0, 'negative': relatorio.lucroMesAtual < 0}">{{
+              relatorio.lucroMesAtual | currency }}</span></h6>
         </div>
+        <div class="card-footer text-muted"> </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card">
-          <h5 class="card-header">Ativo</h5>
-          <div class="card-body">
-            <h6 class="card-title">Estoque:</h6>
-            <h6 class="card-title">Caixa:</h6>
-            <h6 class="card-title">Devedores:</h6>  
-          </div>
-          <div class="card-footer text-muted">Rodapé do card</div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <h5 class="card-header header-ativo">Ativo</h5>
+        <div class="card-body">
+          <h6 class="card-title">Estoque: <span
+              [ngClass]="{'positive': relatorio.ativoEstoque > 0, 'negative': relatorio.ativoEstoque < 0}">{{
+              relatorio.ativoEstoque | currency }}</span></h6>
+          <h6 class="card-title">Caixa: <span
+              [ngClass]="{'positive': relatorio.ativoCaixa > 0, 'negative': relatorio.ativoCaixa < 0}">{{
+              relatorio.ativoCaixa | currency }}</span></h6>
+          <h6 class="card-title">Devedores: <span
+              [ngClass]="{'positive': relatorio.ativoDevedores > 0, 'negative': relatorio.ativoDevedores < 0}">{{
+              relatorio.ativoDevedores | currency }}</span></h6>
         </div>
+        <div class="card-footer text-muted"> </div>
       </div>
     </div>
   </div>
+  <app-chart></app-chart>
+</div>

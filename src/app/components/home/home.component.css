@@ -1,3 +1,33 @@
 .container {
     margin-top: 2rem;
 }
+
+.positive {
+    color: green;
+    font-size: large;
+}
+
+.negative {
+    color: red;
+    font-size: large;
+}
+
+.header-faturamento {
+    background-color: blue;
+    color: white;
+  }
+  
+  .header-gastos {
+    background-color: red;
+    color: white;
+  }
+  
+  .header-lucros {
+    background-color: green;
+    color: white;
+  }
+  
+  .header-ativo {
+    background-color: black;
+    color: white;
+  }

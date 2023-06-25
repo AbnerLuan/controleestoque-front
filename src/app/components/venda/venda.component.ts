@@ -24,6 +24,7 @@ export class VendaComponent implements OnInit {
     canalVenda: '',
     valorFrete: null,
     valorTarifa: null,
+    lucroVenda: null,
     valorTotalVenda: null,
     dataVenda: '',
     itens: []
@@ -35,6 +36,7 @@ export class VendaComponent implements OnInit {
     canalVenda: '',
     valorFrete: null,
     valorTarifa: null,
+    lucroVenda: null,
     valorTotalVenda: null,
     dataVenda: '',
     itens: []

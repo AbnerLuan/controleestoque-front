@@ -21,6 +21,8 @@ import { FiadoComponent } from './components/fiado/fiado.component';
 import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { ChartComponent } from './components/chart/chart.component';
+import { CaixaComponent } from './components/caixa/caixa.component';
 
 registerLocaleData(ptBr);
 
@@ -34,7 +36,9 @@ registerLocaleData(ptBr);
     CompraComponent,
     PaginacaoComponent,
     GastoComponent,
-    FiadoComponent
+    FiadoComponent,
+    ChartComponent,
+    CaixaComponent
   ],
   imports: [
     BrowserModule,

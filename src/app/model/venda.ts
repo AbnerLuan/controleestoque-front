@@ -6,6 +6,7 @@ export interface Venda {
     canalVenda: string;
     valorFrete: number;
     valorTarifa: number;
+    lucroVenda?: number;
     valorTotalVenda: number;
     dataVenda: string,
     itens: ItemPedido[];

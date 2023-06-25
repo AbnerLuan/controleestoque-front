@@ -59,14 +59,15 @@
             <tr *ngFor="let item of venda.itens; let i = index">
               <td>{{ item.nomeProduto }}</td>
               <td>{{ item.quantidade }}</td>
-              <td>{{ item.valorUnit | currency  }}</td>
+              <td>{{ item.valorUnit | currency }}</td>
               <td>
                 <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm" (click)="excluirItem(item.itemId, i)">
+                <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm"
+                  (click)="excluirItem(item.itemId, i)">
                   <i class="bi bi-trash"></i>
-                </button>              
+                </button>
 
               </td>
               <td>{{ item.itemId }}</td>
@@ -81,7 +82,8 @@
                   name="quantidade">
               </td>
               <td>
-                <input type="number" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario" mask="separator.2" thousandSeparator="." prefix="R$">
+                <input type="text" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario"
+                  mask="separator.2" thousandSeparator="." prefix="R$">
               </td>
               <td>
                 <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
@@ -126,10 +128,10 @@
         <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
           <td>{{ vendaItem.vendaId }}</td>
           <td>{{ vendaItem.nomeCliente }}</td>
-          <td>{{ vendaItem.valorFrete | currency  }}</td>
-          <td>{{ vendaItem.valorTarifa | currency  }}</td>
+          <td>{{ vendaItem.valorFrete | currency }}</td>
+          <td>{{ vendaItem.valorTarifa | currency }}</td>
           <td>{{ vendaItem.canalVenda }}</td>
-          <td>{{ vendaItem.valorTotalVenda | currency  }}</td>
+          <td>{{ vendaItem.valorTotalVenda | currency }}</td>
           <td>{{ vendaItem.dataVenda }}</td>
           <td>
             <button type="button" class="btn btn-sm btn-primary" (click)="editarVenda(vendaItem)">
@@ -157,7 +159,7 @@
 <ng-template #viewSaleModal let-modal>
 
   <div class="modal-header">
-    <p class="modal-title" id="viewSaleModalLabel">Detalhes da Venda</p>
+    <p class="modal-title" id="viewSaleModalLabel">Venda Cliente: {{ vendaDetalhes.nomeCliente }}</p>
     <h3 type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </h3>
@@ -165,14 +167,14 @@
   <div class="modal-body">
     <div class="row">
       <div class="col">
-        <p><strong>Cliente:</strong> {{ vendaDetalhes.nomeCliente }}</p>
-        <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete | currency  }}</p>
+        <p><strong>Lucro:</strong> {{ vendaDetalhes.lucroVenda | currency }} ({{ (vendaDetalhes.lucroVenda / vendaDetalhes.valorTotalVenda * 100) | number: '1.2-2' }}%)</p>
+        <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete | currency }}</p>
         <p><strong>Canal de Venda:</strong> {{ vendaDetalhes.canalVenda }}</p>
       </div>
       <div class="col">
-        <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda | currency  }}</p>
-        <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa | currency  }}</p>
-        <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>
+        <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda | currency }}</p>
+        <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa | currency }}</p>
+        <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>      
       </div>
     </div>
 
@@ -188,7 +190,7 @@
         <tr *ngFor="let item of vendaDetalhes.itens">
           <td>{{ item.nomeProduto }}</td>
           <td>{{ item.quantidade }}</td>
-          <td>{{ item.valorUnit | currency  }}</td>
+          <td>{{ item.valorUnit | currency }}</td>
         </tr>
       </tbody>
     </table>

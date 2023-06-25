@@ -135,12 +135,12 @@
                 <div class="col">
                     <p><strong>ID: </strong>{{ selectedFiado?.fiadoId }}</p>
                     <p><strong>Data Registro: </strong> {{ selectedFiado?.dataRegistro }}</p>
-                    <p><strong>Valor Pendente: </strong>{{ selectedFiado?.valorPendente }}</p>
+                    <p><strong>Valor Pendente: </strong>{{ selectedFiado?.valorPendente | currency }}</p>
                 </div>
                 <div class="col">
                     <p><strong>Nome Cliente: </strong>{{ selectedFiado?.nomeCliente }}</p>
                     <p><strong>Celular Cliente: </strong>{{ selectedFiado?.celularCliente }}</p>
-                    <p><strong>Valor Total: </strong>{{ selectedFiado?.valorTotal }}</p>
+                    <p><strong>Valor Total: </strong>{{ selectedFiado?.valorTotal | currency }}</p>
                 </div>
                 <hr>
                 <p>{{ selectedFiado?.observacoes }}</p>
@@ -160,7 +160,7 @@
                 <tbody>
                     <tr *ngFor="let pagamento of selectedFiado?.pagamento">
                         <td>{{ pagamento.pagamentoId }}</td>
-                        <td>{{ pagamento.valorPagamento }}</td>
+                        <td>{{ pagamento.valorPagamento | currency }}</td>
                         <td>{{ pagamento.dataDoPagamento }}</td>
                     </tr>
                 </tbody>
