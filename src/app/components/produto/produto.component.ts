@@ -17,8 +17,8 @@ export class ProdutoComponent implements OnInit {
   produtos: Produto[];
   produto: Produto = {} as Produto;
   isEdit = false;
-  options: string[] = ['Nome']; // Exemplo de opções para o campo de seleção
-  selectedOption: string; // Opção selecionada no campo de seleção
+  options: string[] = ['Nome']; 
+  selectedOption: string; 
   searchValue: string;
 
   page = 0;

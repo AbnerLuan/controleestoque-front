@@ -1,1 +1,63 @@
-<p>caixa works!</p>
+<div class="container mt-4">
+    <h3>Fluxo de Caixa</h3>
+    <form (ngSubmit)="salvarTransacao()" class="form">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="tipoTransacaoSelect">Tipo da Transação:</label>
+                    <select id="tipoTransacao" class="form-control" name="tipoTransacao" [(ngModel)]="caixa.tipoTransacao">
+                        <option value="ENTRADA">ENTRADA</option>
+                        <option value="SAIDA">SAIDA</option>
+                        </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Valor Transacao</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="caixa.valorTransacao"
+                        name="valorTransacao" [formControl]="valorTransacao" mask="separator.2" thousandSeparator="." prefix="R$">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Observacoes</label>
+                    <input required type="text" class="form-control border" [(ngModel)]="caixa.observacao"
+                        name="observacao" [formControl]="observacao">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr class="table-primary">
+                <th>ID</th>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Saldo Caixa</th> 
+                <th>Observações</th>                               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let caixaItem of caixas" [ngClass]="{'table-hoverable-row': true}">
+                <td>{{ caixaItem.caixaId }}</td>
+                <td>{{ caixaItem.dataLancamento }}</td>
+                <td>{{ caixaItem.tipoTransacao }}</td>
+                <td>{{ caixaItem.valorTransacao | currency }}</td>
+                <td>{{ caixaItem.saldoCaixa | currency }}</td>        
+                <td>{{ caixaItem.observacao }}</td>
+            </tr>
+        </tbody>
+    </table>  
+    <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
+        (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>  
+</div>
