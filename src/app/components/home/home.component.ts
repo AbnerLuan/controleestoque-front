@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     ativoEstoque: null,
     ativoCaixa: null,
     ativoDevedores: null,
+    ativoTotal: null,
   };
 
   constructor(private relatorioService: RelatorioService,

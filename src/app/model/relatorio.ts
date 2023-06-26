@@ -11,5 +11,5 @@ export interface Relatorio {
     ativoEstoque: number;
     ativoCaixa: number;
     ativoDevedores: number;
-
+    ativoTotal: number;
 }

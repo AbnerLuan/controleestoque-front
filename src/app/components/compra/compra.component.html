@@ -1,1 +1,164 @@
-<p>compras works!</p>
+<div class="container mt-4">
+    <h3>{{ isEdit ? 'Editar' : 'Nova' }} Compra</h3>
+  
+    <form (ngSubmit)="isEdit ? atualizarCompra(compra) : salvarCompra()" class="form">
+      <!-- Campos de entrada para cadastrar uma nova compra -->
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>Nome do Fornecedor</label>
+            <input required type="text" class="form-control border" [(ngModel)]="compra.nomeFornecedor" name="nomeFornecedor"
+              id="nomeFornecedor" [formControl]="nomeFornecedor">
+          </div>
+        </div> 
+      </div>
+  
+  
+      <!-- Lista de Produtos -->
+      <div class="row">
+        <div class="col">
+          <h4>Lista de Produtos</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nome Produto</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Ações</th>
+                <th>Item ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of compra.itensCompra; let i = index">
+                <td>{{ item.nomeProduto }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.valorUnit | currency }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm"
+                    (click)="excluirItem(item.itemCompraId, i)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+  
+                </td>
+                <td>{{ item.itemCompraId }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <input required type="text" class="form-control" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto"
+                    [ngbTypeahead]="buscarProdutos" (selectItem)="selecionarProduto($event)" />
+                </td>
+                <td>
+                  <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade"
+                    name="quantidade">
+                </td>
+                <td>
+                  <input type="text" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario"
+                    mask="separator.2" thousandSeparator="." prefix="R$">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
+                    <i class="bi bi-plus"></i> {{ editandoItem ? 'Atualizar Item' : '' }}
+                  </button>
+                </td>
+                <td>{{ novoItem.itemCompraId }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <!-- Botões de ação -->
+      <div class="row">
+        <div class="col">
+          <button [disabled]="!validaCampos()" type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> {{ isEdit ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
+          <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar Edição</button>
+        </div>
+      </div>
+    </form>
+  
+    <div class="mt-4" [ngClass]="{'disable-click': isEdit}">
+      <h4>Compras Cadastradas</h4>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th>ID</th>
+            <th>Nome do Fornecedor</th>
+            <th>Valor Total da Compra</th>
+            <th>Data da Compra</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let compraItem of compras" [ngClass]="{'table-hoverable-row': true}">
+            <td>{{ compraItem.compraId }}</td>
+            <td>{{ compraItem.nomeFornecedor }}</td>
+            <td>{{ compraItem.valorTotalCompra | currency }}</td>
+            <td>{{ compraItem.dataCompra }}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-primary" (click)="editarCompra(compraItem)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusaoCompra(compraItem)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-success" (click)="openModal(viewSaleModal, compraItem)">
+                <i class="bi bi-eye"></i>
+              </button>
+  
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
+        (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
+    </div>
+  </div>
+  <!-- Compra Component HTML -->
+  
+  <!-- Modal -->
+  <ng-template #viewSaleModal let-modal>
+  
+    <div class="modal-header">
+      <p class="modal-title" id="viewSaleModalLabel">Compra Cliente: {{ compraDetalhes.nomeFornecedor }}</p>
+      <h3 type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col">         
+        </div>
+        <div class="col">
+          <p><strong>R$ Total:</strong> {{ compraDetalhes.valorTotalCompra | currency }}</p>          
+          <p><strong>Data da Compra:</strong> {{ compraDetalhes.dataCompra }}</p>      
+        </div>
+      </div>
+  
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome do Produto</th>
+            <th>Quantidade</th>
+            <th>R$ Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of compraDetalhes.itensCompra">
+            <td>{{ item.nomeProduto }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.valorUnit | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fechar</button>
+    </div>
+  </ng-template>

@@ -53,7 +53,7 @@
     </div>
     <div class="col-sm-3">
       <div class="card">
-        <h5 class="card-header header-ativo">Ativo</h5>
+        <h5 class="card-header header-ativo">Ativos <span class="small-font">({{relatorio.ativoTotal | currency }})</span> </h5>
         <div class="card-body">
           <h6 class="card-title">Estoque: <span
               [ngClass]="{'positive': relatorio.ativoEstoque > 0, 'negative': relatorio.ativoEstoque < 0}">{{
@@ -63,7 +63,7 @@
               relatorio.ativoCaixa | currency }}</span></h6>
           <h6 class="card-title">Devedores: <span
               [ngClass]="{'positive': relatorio.ativoDevedores > 0, 'negative': relatorio.ativoDevedores < 0}">{{
-              relatorio.ativoDevedores | currency }}</span></h6>
+              relatorio.ativoDevedores | currency }}</span></h6>           
         </div>
         <div class="card-footer text-muted"> </div>
       </div>
