@@ -7,6 +7,7 @@ import { CompraComponent } from './components/compra/compra.component';
 import { GastoComponent } from './components/gasto/gasto.component';
 import { FiadoComponent } from './components/fiado/fiado.component';
 import { CaixaComponent } from './components/caixa/caixa.component';
+import { PaginaclienteComponent } from './components/fiado/paginacliente/paginacliente.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
  { path: 'gastos', component: GastoComponent }, 
  { path: 'fiados', component: FiadoComponent }, 
  { path: 'caixa', component: CaixaComponent }, 
+ { path: 'fiado/:celularCliente', component: PaginaclienteComponent },
 ];
 
 @NgModule({

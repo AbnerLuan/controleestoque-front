@@ -24,6 +24,7 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { ChartComponent } from './components/chart/chart.component';
 import { CaixaComponent } from './components/caixa/caixa.component';
+import { PaginaclienteComponent } from './components/fiado/paginacliente/paginacliente.component';
 
 registerLocaleData(ptBr);
 
@@ -39,7 +40,8 @@ registerLocaleData(ptBr);
     GastoComponent,
     FiadoComponent,
     ChartComponent,
-    CaixaComponent
+    CaixaComponent,
+    PaginaclienteComponent
   ],
   imports: [
     BrowserModule,

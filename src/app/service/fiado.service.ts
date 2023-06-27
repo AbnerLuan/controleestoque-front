@@ -13,6 +13,11 @@ export class FiadoService {
 
   constructor(private http: HttpClient) { }
 
+  buscarClientePorCelular(celularCliente: string): Observable<Fiado> {
+    const url = `${this.URL}/${celularCliente}`;
+    return this.http.get<Fiado>(url);
+  }
+
   findAll(): Observable<Fiado[]> {
     return this.http.get<Fiado[]>(this.URL);
   }
