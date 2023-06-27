@@ -7,7 +7,7 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 import { Compra } from 'src/app/model/compra';
 import { ItemCompra } from 'src/app/model/itemcompra';
 import { CompraService } from 'src/app/service/compra.service';
-import { ItempedidoService } from 'src/app/service/itempedido.service';
+import { ItemcompraService } from 'src/app/service/itemcompra.service';
 import { ProdutoService } from 'src/app/service/produto.service';
 
 @Component({
@@ -59,7 +59,7 @@ export class CompraComponent implements OnInit {
     private toastr: ToastrService,
     private produtoService: ProdutoService,
     private modalService: NgbModal,
-    private itempedidoService: ItempedidoService,
+    private itemcompraService: ItemcompraService,
   ) { }
 
   ngOnInit(): void {
@@ -241,7 +241,7 @@ export class CompraComponent implements OnInit {
       this.compra.itensCompra.splice(index, 1);
     } else {
       if (confirm('Tem certeza de que deseja remover este item?')) {
-        this.itempedidoService.excluirItem(item).subscribe(
+        this.itemcompraService.excluirItem(item).subscribe(
           () => {
             this.compra.itensCompra.splice(index, 1);
             this.toastr.success("Item " + item.itemId + " excluído com sucesso!");
