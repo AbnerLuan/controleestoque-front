@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class HeaderComponent implements OnInit{
 
+  isMenuCollapsed = true;
+
   constructor(private service: AuthService,
     private toast: ToastrService,
     private router: Router,
