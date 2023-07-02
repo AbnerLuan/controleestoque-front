@@ -7,3 +7,7 @@
     color: gray;
     
   }  
+
+  .align-right {
+    margin-left: auto;
+  }

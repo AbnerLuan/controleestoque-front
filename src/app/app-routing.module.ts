@@ -8,16 +8,25 @@ import { GastoComponent } from './components/gasto/gasto.component';
 import { FiadoComponent } from './components/fiado/fiado.component';
 import { CaixaComponent } from './components/caixa/caixa.component';
 import { PaginaclienteComponent } from './components/fiado/paginacliente/paginacliente.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './auth/auth.guard';
+
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'produtos', component: ProdutoComponent }, 
-  { path: 'vendas', component: VendaComponent }, 
-  { path: 'compras', component: CompraComponent },
- { path: 'gastos', component: GastoComponent }, 
- { path: 'fiados', component: FiadoComponent }, 
- { path: 'caixa', component: CaixaComponent }, 
- { path: 'fiado/:celularCliente', component: PaginaclienteComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'fiado/:celularCliente', component: PaginaclienteComponent },
+
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'produtos', component: ProdutoComponent, canActivate: [AuthGuard] },
+  { path: 'vendas', component: VendaComponent, canActivate: [AuthGuard] },
+  { path: 'compras', component: CompraComponent, canActivate: [AuthGuard] },
+  { path: 'gastos', component: GastoComponent, canActivate: [AuthGuard] },
+  { path: 'fiados', component: FiadoComponent, canActivate: [AuthGuard] },
+  { path: 'caixa', component: CaixaComponent, canActivate: [AuthGuard] },
+
+
+
 ];
 
 @NgModule({

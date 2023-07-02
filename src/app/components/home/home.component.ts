@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
     this.buscarRelatorio();
   }
 
-  buscarRelatorio() {
+  buscarRelatorio() {    
     this.relatorioService.buscarRelatorio().subscribe(
       response => {
         this.relatorio = response;

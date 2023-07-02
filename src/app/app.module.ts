@@ -25,6 +25,10 @@ import { registerLocaleData } from '@angular/common';
 import { ChartComponent } from './components/chart/chart.component';
 import { CaixaComponent } from './components/caixa/caixa.component';
 import { PaginaclienteComponent } from './components/fiado/paginacliente/paginacliente.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SpinnerService } from './service/spinner.service';
 
 registerLocaleData(ptBr);
 
@@ -41,7 +45,9 @@ registerLocaleData(ptBr);
     FiadoComponent,
     ChartComponent,
     CaixaComponent,
-    PaginaclienteComponent
+    PaginaclienteComponent,
+    LoginComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +68,13 @@ registerLocaleData(ptBr);
     NgChartsModule,
   ],
   providers: [
+    AuthInterceptorProvider,
+    SpinnerService,
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
-    provideEnvironmentNgxMask()],   
+    provideEnvironmentNgxMask()
+  ],   
+    
   bootstrap: [AppComponent]
 })
 export class AppModule { }
