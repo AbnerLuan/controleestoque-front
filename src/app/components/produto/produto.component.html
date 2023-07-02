@@ -84,8 +84,8 @@
                                 <label for="atributoSelect" class="mr-2">Pesquisar por:</label>
                             </div>
                             <div class="col">
-                                <select id="atributoSelect" class="form-control hide-on-mobile" [(ngModel)]="selectedOption"
-                                    name="selectedOption">
+                                <select id="atributoSelect" class="form-control hide-on-mobile"
+                                    [(ngModel)]="selectedOption" name="selectedOption">
                                     <option value="" disabled class="hide-on-mobile">Selecione um atributo</option>
                                     <option *ngFor="let option of options" [value]="option">{{ option }}</option>
                                 </select>
@@ -113,50 +113,51 @@
         </form>
     </div>
 
-
-    <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
-        <thead>
-            <tr class="table-primary">
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Tipo</th>
-                <th>Marca</th>
-                <th>EAN</th>
-                <th>Site</th>
-                <th>ML</th>
-                <th>Shopee</th>
-                <th>Blog</th>
-                <th>QTD</th>
-                <th>R$ Unit</th>
-                <th>Total</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let produto of produtos" [ngClass]="{'table-hoverable-row': true}">
-                <td>{{ produto.produtoId }}</td>
-                <td>{{ produto.nomeProduto }}</td>
-                <td>{{ produto.tipoProduto }}</td>
-                <td>{{ produto.marcaProduto }}</td>
-                <td>{{ produto.ean }}</td>
-                <td>{{ produto.cadastroSite ? 'OK' : 'NÃO' }}</td>
-                <td>{{ produto.cadastroMl ? 'OK' : 'NÃO' }}</td>
-                <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
-                <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
-                <td>{{ produto.quantidadeEstoque }}</td>
-                <td>{{ produto.valorUnitario | currency }}</td>
-                <td>{{ produto.valorTotal | currency }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-danger" (click)="removerProduto(produto.produtoId)">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Marca</th>
+                    <th>EAN</th>
+                    <th>Site</th>
+                    <th>ML</th>
+                    <th>Shopee</th>
+                    <th>Blog</th>
+                    <th>QTD</th>
+                    <th>R$ Unit</th>
+                    <th>Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let produto of produtos" [ngClass]="{'table-hoverable-row': true}">
+                    <td>{{ produto.produtoId }}</td>
+                    <td>{{ produto.nomeProduto }}</td>
+                    <td>{{ produto.tipoProduto }}</td>
+                    <td>{{ produto.marcaProduto }}</td>
+                    <td>{{ produto.ean }}</td>
+                    <td>{{ produto.cadastroSite ? 'OK' : 'NÃO' }}</td>
+                    <td>{{ produto.cadastroMl ? 'OK' : 'NÃO' }}</td>
+                    <td>{{ produto.cadastroShoppe ? 'OK' : 'NÃO' }}</td>
+                    <td>{{ produto.blog ? 'OK' : 'NÃO' }}</td>
+                    <td>{{ produto.quantidadeEstoque }}</td>
+                    <td>{{ produto.valorUnitario | currency }}</td>
+                    <td>{{ produto.valorTotal | currency }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="editarProduto(produto)">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="removerProduto(produto.produtoId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
         (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
 </div>

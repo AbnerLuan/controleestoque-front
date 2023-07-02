@@ -12,8 +12,8 @@
             <div class="col">
                 <div class="form-group">
                     <label>Valor</label>
-                    <input required type="text" class="form-control border" [(ngModel)]="gasto.valor"
-                        name="valor" [formControl]="valor" mask="separator.2" thousandSeparator="." prefix="R$">
+                    <input required type="text" class="form-control border" [(ngModel)]="gasto.valor" name="valor"
+                        [formControl]="valor" mask="separator.2" thousandSeparator="." prefix="R$">
                 </div>
             </div>
         </div>
@@ -27,30 +27,32 @@
         </div>
     </form>
 
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr class="table-primary">
-                <th>ID</th>
-                <th>Descricao</th>
-                <th>Valor</th>
-                <th>Data</th> 
-                <th>Ações</th>                
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let gastoItem of gastos" [ngClass]="{'table-hoverable-row': true}">
-                <td>{{ gastoItem.gastoId }}</td>
-                <td>{{ gastoItem.descricao }}</td>
-                <td>{{ gastoItem.valor | currency }}</td>
-                <td>{{ gastoItem.dataRegistro }}</td>              
-                <td>                  
-                    <button class="btn btn-sm btn-danger" (click)="excluirGasto(gastoItem.gastoId)">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>  
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Descricao</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let gastoItem of gastos" [ngClass]="{'table-hoverable-row': true}">
+                    <td>{{ gastoItem.gastoId }}</td>
+                    <td>{{ gastoItem.descricao }}</td>
+                    <td>{{ gastoItem.valor | currency }}</td>
+                    <td>{{ gastoItem.dataRegistro }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="excluirGasto(gastoItem.gastoId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
-        (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>  
+        (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
 </div>

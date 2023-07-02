@@ -111,43 +111,44 @@
 
   <div class="mt-4" [ngClass]="{'disable-click': isEdit}">
     <h4>Vendas Cadastradas</h4>
-    <table class="table table-bordered table-striped table-hover">
-      <thead>
-        <tr class="table-primary">
-          <th>ID</th>
-          <th>Nome do Cliente</th>
-          <th>Valor Frete</th>
-          <th>Valor Tarifa</th>
-          <th>Canal de Venda</th>
-          <th>Valor Total da Venda</th>
-          <th>Data da Venda</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
-          <td>{{ vendaItem.vendaId }}</td>
-          <td>{{ vendaItem.nomeCliente }}</td>
-          <td>{{ vendaItem.valorFrete | currency }}</td>
-          <td>{{ vendaItem.valorTarifa | currency }}</td>
-          <td>{{ vendaItem.canalVenda }}</td>
-          <td>{{ vendaItem.valorTotalVenda | currency }}</td>
-          <td>{{ vendaItem.dataVenda }}</td>
-          <td>
-            <button type="button" class="btn btn-sm btn-primary" (click)="editarVenda(vendaItem)">
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusaoVenda(vendaItem)">
-              <i class="bi bi-trash"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-success" (click)="openModal(viewSaleModal, vendaItem)">
-              <i class="bi bi-eye"></i>
-            </button>
-
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th>ID</th>
+            <th>Nome do Cliente</th>
+            <th>Valor Frete</th>
+            <th>Valor Tarifa</th>
+            <th>Canal de Venda</th>
+            <th>Valor Total da Venda</th>
+            <th>Data da Venda</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vendaItem of vendas" [ngClass]="{'table-hoverable-row': true}">
+            <td>{{ vendaItem.vendaId }}</td>
+            <td>{{ vendaItem.nomeCliente }}</td>
+            <td>{{ vendaItem.valorFrete | currency }}</td>
+            <td>{{ vendaItem.valorTarifa | currency }}</td>
+            <td>{{ vendaItem.canalVenda }}</td>
+            <td>{{ vendaItem.valorTotalVenda | currency }}</td>
+            <td>{{ vendaItem.dataVenda }}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-primary" (click)="editarVenda(vendaItem)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-danger" (click)="confirmarExclusaoVenda(vendaItem)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-success" (click)="openModal(viewSaleModal, vendaItem)">
+                <i class="bi bi-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <app-paginacao [currentPage]="page" [pageSize]="pageSize" [totalElements]="totalElements"
       (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)"></app-paginacao>
@@ -167,14 +168,15 @@
   <div class="modal-body">
     <div class="row">
       <div class="col">
-        <p><strong>Lucro:</strong> {{ vendaDetalhes.lucroVenda | currency }} ({{ (vendaDetalhes.lucroVenda / vendaDetalhes.valorTotalVenda * 100) | number: '1.2-2' }}%)</p>
+        <p><strong>Lucro:</strong> {{ vendaDetalhes.lucroVenda | currency }} ({{ (vendaDetalhes.lucroVenda /
+          vendaDetalhes.valorTotalVenda * 100) | number: '1.2-2' }}%)</p>
         <p><strong>Valor Frete:</strong> {{ vendaDetalhes.valorFrete | currency }}</p>
         <p><strong>Canal de Venda:</strong> {{ vendaDetalhes.canalVenda }}</p>
       </div>
       <div class="col">
         <p><strong>R$ Total:</strong> {{ vendaDetalhes.valorTotalVenda | currency }}</p>
         <p><strong>R$ Tarifa:</strong> {{ vendaDetalhes.valorTarifa | currency }}</p>
-        <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>      
+        <p><strong>Data da Venda:</strong> {{ vendaDetalhes.dataVenda }}</p>
       </div>
     </div>
 

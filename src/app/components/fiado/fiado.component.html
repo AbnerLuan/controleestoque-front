@@ -87,52 +87,51 @@
             </div>
         </div>
     </form>
-
-    <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
-        <thead>
-            <tr class="table-primary">
-                <th>ID</th>
-                <th>Nome Cliente</th>
-                <th>Celular Cliente</th>
-                <th>Data Registro</th>
-                <th>VALOR TOTAL</th>
-                <th>VALOR PENDENTE</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let fiadoItem of fiados" [ngClass]="{'table-hoverable-row': true}">
-                <td>{{ fiadoItem.fiadoId }}</td>
-                <td>
-                   <!-- <a href="#" (click)="redirecionarCliente(fiadoItem.celularCliente)">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover" [ngClass]="{'disable-click': isEdit}">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Nome Cliente</th>
+                    <th>Celular Cliente</th>
+                    <th>Data Registro</th>
+                    <th>VALOR TOTAL</th>
+                    <th>VALOR PENDENTE</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fiadoItem of fiados" [ngClass]="{'table-hoverable-row': true}">
+                    <td>{{ fiadoItem.fiadoId }}</td>
+                    <td>
+                        <!-- <a href="#" (click)="redirecionarCliente(fiadoItem.celularCliente)">
                         <i class="bi bi-arrow-right"></i>
                         {{ fiadoItem.nomeCliente }}
                     </a> -->
-                    <button class="btn btn-sm btn-success" (click)="redirecionarCliente(fiadoItem.celularCliente)">
-                        <i class="bi bi-arrow-right"></i>
-                    </button>
-                    {{ fiadoItem.nomeCliente }}
-                </td>
-                <td>{{ fiadoItem.celularCliente | mask: '(00) 00000-0000'}}</td>
-                <td>{{ fiadoItem.dataRegistro }}</td>
-                <td>{{ fiadoItem.valorTotal | currency }}</td>
-                <td>{{ fiadoItem.valorPendente | currency }}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" (click)="carregarDadosParaEdicao(fiadoItem)">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm btn-danger" (click)="excluirFiado(fiadoItem.fiadoId)">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                    <button class="btn btn-sm btn-success" (click)="openModal(fiadoItem)">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-
-
-    </table>
+                        <button class="btn btn-sm btn-success" (click)="redirecionarCliente(fiadoItem.celularCliente)">
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                        {{ fiadoItem.nomeCliente }}
+                    </td>
+                    <td>{{ fiadoItem.celularCliente | mask: '(00) 00000-0000'}}</td>
+                    <td>{{ fiadoItem.dataRegistro }}</td>
+                    <td>{{ fiadoItem.valorTotal | currency }}</td>
+                    <td>{{ fiadoItem.valorPendente | currency }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="carregarDadosParaEdicao(fiadoItem)">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="excluirFiado(fiadoItem.fiadoId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <button class="btn btn-sm btn-success" (click)="openModal(fiadoItem)">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <!-- Modal de Visualização -->
     <ng-template #content let-modal>

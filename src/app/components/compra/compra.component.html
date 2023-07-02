@@ -18,57 +18,59 @@
     <div class="row">
       <div class="col">
         <h4>Lista de Produtos</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome Produto</th>
-              <th>Quantidade</th>
-              <th>Valor Unitário</th>
-              <th>Valor Total do Item</th>
-              <th>Ações</th>
-              <th>Item ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of compra.itensCompra; let i = index">
-              <td>{{ item.nomeProduto }}</td>
-              <td>{{ item.quantidade }}</td>
-              <td>{{ item.valorUnit | currency }}</td>
-              <td>{{ item.valorTotalItem | currency }}</td>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm"
-                  (click)="excluirItem(item.itemCompraId, i)">
-                  <i class="bi bi-trash"></i>
-                </button>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nome Produto</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total do Item</th>
+                <th>Ações</th>
+                <th>Item ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of compra.itensCompra; let i = index">
+                <td>{{ item.nomeProduto }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.valorUnit | currency }}</td>
+                <td>{{ item.valorTotalItem | currency }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="editarItem(item, i)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button *ngIf="!editandoItem" type="button" class="btn btn-danger btn-sm"
+                    (click)="excluirItem(item.itemCompraId, i)">
+                    <i class="bi bi-trash"></i>
+                  </button>
 
-              </td>
-              <td>{{ item.itemCompraId }}</td>
-            </tr>
-            <tr>
-              <td>
-                <input required type="text" class="form-control" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto"
-                  [ngbTypeahead]="buscarProdutos" (selectItem)="selecionarProduto($event)" />
-              </td>
-              <td>
-                <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade"
-                  name="quantidade">
-              </td>
-              <td>
-                <input type="text" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario"
-                  mask="separator.2" thousandSeparator="." prefix="R$">
-              </td>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
-                  <i class="bi bi-plus"></i> {{ editandoItem ? 'Atualizar Item' : '' }}
-                </button>
-              </td>
-              <td>{{ novoItem.itemCompraId }}</td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+                <td>{{ item.itemCompraId }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <input required type="text" class="form-control" [(ngModel)]="novoItem.nomeProduto" name="nomeProduto"
+                    [ngbTypeahead]="buscarProdutos" (selectItem)="selecionarProduto($event)" />
+                </td>
+                <td>
+                  <input required type="number" class="form-control border" [(ngModel)]="novoItem.quantidade"
+                    name="quantidade">
+                </td>
+                <td>
+                  <input type="text" class="form-control border" [(ngModel)]="novoItem.valorUnit" name="valorUnitario"
+                    mask="separator.2" thousandSeparator="." prefix="R$">
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="adicionarItem()">
+                    <i class="bi bi-plus"></i> {{ editandoItem ? 'Atualizar Item' : '' }}
+                  </button>
+                </td>
+                <td>{{ novoItem.itemCompraId }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -79,7 +81,8 @@
           <i class="bi bi-save"></i> {{ isEdit ? 'Atualizar' : 'Salvar' }}
         </button>
         <button *ngIf="!isEdit" type="button" class="btn btn-secondary" (click)="limparFormulario()">Limpar</button>
-        <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar Edição</button>
+        <button *ngIf="isEdit" type="button" class="btn btn-warning" (click)="cancelarEdicao()">Cancelar
+          Edição</button>
       </div>
     </div>
   </form>
@@ -128,7 +131,8 @@
 <ng-template #viewSaleModal let-modal>
 
   <div class="modal-header">
-    <p class="modal-title" id="viewSaleModalLabel">Detalhes da compra do fornecedor: {{ compraDetalhes.nomeFornecedor }}</p>
+    <p class="modal-title" id="viewSaleModalLabel">Detalhes da compra do fornecedor: {{ compraDetalhes.nomeFornecedor }}
+    </p>
     <h3 type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </h3>
@@ -138,9 +142,9 @@
       <div class="col">
         <p><strong>R$ Total:</strong> {{ compraDetalhes.valorTotalCompra | currency }}</p>
       </div>
-      <div class="col">        
+      <div class="col">
         <p><strong>Data da Compra:</strong> {{ compraDetalhes.dataCompra }}</p>
-      </div>      
+      </div>
     </div>
 
     <table class="table">
