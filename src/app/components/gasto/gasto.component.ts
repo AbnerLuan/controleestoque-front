@@ -21,7 +21,7 @@ export class GastoComponent implements OnInit {
   gasto: Gasto = {} as Gasto;
 
   page = 0;
-  pageSize = 5;
+  pageSize = 10;
   totalElements = 0;
 
   descricao = new FormControl('', Validators.minLength(3));

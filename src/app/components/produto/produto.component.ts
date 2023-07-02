@@ -22,7 +22,7 @@ export class ProdutoComponent implements OnInit {
   searchValue: string;
 
   page = 0;
-  pageSize = 5;
+  pageSize = 10;
   totalElements = 0;
 
   nomeProduto = new FormControl(null, Validators.minLength(3));

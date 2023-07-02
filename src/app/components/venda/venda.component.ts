@@ -58,9 +58,9 @@ export class VendaComponent implements OnInit {
   isEdit = false;
   editandoItem: boolean = false;
 
-  page = 0; // Página atual
-  pageSize = 5; // Quantidade de itens por página
-  totalElements = 0; // Total de elementos
+  page = 0;
+  pageSize = 10; 
+  totalElements = 0; 
 
   constructor(
     private vendaService: VendaService,

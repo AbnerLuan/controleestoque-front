@@ -19,7 +19,7 @@ export class CompraComponent implements OnInit {
 
   compra: Compra = {
     compraId: null,
-    nomeFornecedor: '',    
+    nomeFornecedor: '',
     valorTotalCompra: null,
     dataCompra: null,
     itensCompra: []
@@ -27,8 +27,8 @@ export class CompraComponent implements OnInit {
 
   compraDetalhes: Compra = {
     compraId: null,
-    nomeFornecedor: '',    
-    valorTotalCompra: null, 
+    nomeFornecedor: '',
+    valorTotalCompra: null,
     dataCompra: null,
     itensCompra: []
   };
@@ -50,9 +50,9 @@ export class CompraComponent implements OnInit {
   isEdit = false;
   editandoItem: boolean = false;
 
-  page = 0; // Página atual
-  pageSize = 5; // Quantidade de itens por página
-  totalElements = 0; // Total de elementos
+  page = 0;
+  pageSize = 10;
+  totalElements = 0;
 
   constructor(
     private compraService: CompraService,
@@ -116,7 +116,7 @@ export class CompraComponent implements OnInit {
 
 
   removerCompra(compra: Compra): void {
-    const compraId = compra.compraId;    
+    const compraId = compra.compraId;
     this.compraService.removerCompra(compraId).subscribe(
       () => {
         this.compras = this.compras.filter(v => v.compraId !== compraId);
