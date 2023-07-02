@@ -13,8 +13,9 @@ export class AppComponent {
   constructor(private router: Router) {
     this.showHeader = true;
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showHeader = !event.url.match(/^\/fiado(\/|$)/);
+      if (event instanceof NavigationEnd) {        
+        this.showHeader = !event.url.match(/^\/fiado(\/|$)/) && !event.url.includes('/login');
+        
       }
     });
   }
