@@ -13,7 +13,8 @@
                 <div class="form-group">
                     <label>Valor Total</label>
                     <input required type="text" class="form-control border" [(ngModel)]="fiado.valorTotal"
-                        name="valorTotal" [formControl]="valorTotal" mask="separator.2" thousandSeparator="." prefix="R$">
+                        name="valorTotal" [formControl]="valorTotal" mask="separator.2" thousandSeparator="."
+                        prefix="R$">
                 </div>
             </div>
             <div class="col-md-3">
@@ -59,9 +60,9 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <input required type="text" mask="separator.2" thousandSeparator="." prefix="R$" class="form-control border"
-                                    [(ngModel)]="novoPagamento.valor" name="valorPagamento"
-                                    placeholder="Digite aqui o valor do pagamento..." >
+                                <input required type="text" mask="separator.2" thousandSeparator="." prefix="R$"
+                                    class="form-control border" [(ngModel)]="novoPagamento.valor" name="valorPagamento"
+                                    placeholder="Digite aqui o valor do pagamento...">
                             </td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm" (click)="adicionarPagamento()">
@@ -102,7 +103,16 @@
         <tbody>
             <tr *ngFor="let fiadoItem of fiados" [ngClass]="{'table-hoverable-row': true}">
                 <td>{{ fiadoItem.fiadoId }}</td>
-                <td>{{ fiadoItem.nomeCliente }}</td>
+                <td>
+                   <!-- <a href="#" (click)="redirecionarCliente(fiadoItem.celularCliente)">
+                        <i class="bi bi-arrow-right"></i>
+                        {{ fiadoItem.nomeCliente }}
+                    </a> -->
+                    <button class="btn btn-sm btn-success" (click)="redirecionarCliente(fiadoItem.celularCliente)">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                    {{ fiadoItem.nomeCliente }}
+                </td>
                 <td>{{ fiadoItem.celularCliente | mask: '(00) 00000-0000'}}</td>
                 <td>{{ fiadoItem.dataRegistro }}</td>
                 <td>{{ fiadoItem.valorTotal | currency }}</td>
@@ -120,6 +130,8 @@
                 </td>
             </tr>
         </tbody>
+
+
     </table>
 
     <!-- Modal de Visualização -->

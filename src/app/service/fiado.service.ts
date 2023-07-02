@@ -14,7 +14,7 @@ export class FiadoService {
   constructor(private http: HttpClient) { }
 
   buscarClientePorCelular(celularCliente: string): Observable<Fiado> {
-    const url = `${this.URL}/${celularCliente}`;
+    const url = `${this.URL}/cliente/${celularCliente}`;
     return this.http.get<Fiado>(url);
   }
 

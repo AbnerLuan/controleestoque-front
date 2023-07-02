@@ -161,4 +161,9 @@ export class FiadoComponent implements OnInit {
     this.isEdit = true;    
   }
 
+  redirecionarCliente(celularCliente: string) {
+    const url = `/fiado/${celularCliente}`;
+    window.open(url, '_blank');
+  }
+
 }
